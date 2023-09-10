@@ -11,3 +11,9 @@ class mainTest(TestCase):
     def test_main_using_main_template(self):
         response = Client().get('/main/')
         self.assertTemplateUsed(response, 'main.html')
+
+    def test_main_app_detail(self):
+        response = Client().get('/main/')
+        self.assertEqual(response.context['app_name'], 'librory')
+        self.assertEqual(response.context['name'], 'Michelle Elizabeth Amanda Hutasoit')
+        self.assertEqual(response.context['class'], 'PBP C')
