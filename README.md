@@ -18,10 +18,12 @@ Sama seperti yang sebelumnya dilakukan saat membuat sebuah proyek Django baru, v
 Untuk melakukan routing, saya **membuat berkas ```urls.py``` di dalam direktori ```main```** dan **mengimport ```path``` dari ```django.urls```** untuk mendefinisikan pola URL. Berkas ```urls.py``` yang dibuat di dalam direktori ```main``` ditujukan untuk mengatur rute URL pada aplikasi ```main```. Sebelumnya, pada berkas ```views.py```, saya telah menambahkan fungsi ```show_main``` sebagai tampilan, maka dari itu saya **meng-import fungsi ```show_main```** untuk kemudian ditampilkan ketika URL terkait diakses. Saya juga **menambahkan variabel bernama ```app_name```** yang kemudian digunakan untuk memberikan nama unik pada pola URL dalam aplikasi. 
 
 #### d. Membuat model pada aplikasi main dengan nama Item dan memiliki atribut:
-1. name dengan tipe CharField
-2. amount dengan tipe IntegerField
-3. type dengan tipe TextField 
-4. description dengan tipe TextField
+1. ```name``` dengan tipe CharField: judul buku
+2. ```amount``` dengan tipe IntegerField: jumlah buku
+3. ```rented``` dengan tipe IntegerField: jumlah buku yang disewa
+4. ```available``` dengan tipe IntegerField hasil pengurangan amount dengan rented: jumlah buku yang dapat digunakan
+5. ```category``` dengan tipe TextField: kategori buku
+6. ```description``` dengan tipe TextField: deskripsi/sinopsis buku
 
 Untuk membuat model pada aplikasi ```main``` sesuai dengan class dan atribut yang saya inginkan, saya terlebih dahulu **meng-import modul ```models``` dari modul ```django.db```**. Setelah itu, saya **membuat class dengan nama ```Item``` yang menerima parameter ```models.Model```**, parameter tersebut merupakan kelas dasar yang akan digunakan untuk mendefinisikan model dalam Django. Di dalam class ```Item```, saya **menambahkan atribut ```name``` dengan tipe CharField** yang hanya menerika karakter dengan panjang maksimal 255 karakter, **atribut ```amount``` dengan tipe IntegerField**, **atribut ```type``` dengan tipe TextField**, dan **atribut ```description``` dengan tipe TextField**.
 
