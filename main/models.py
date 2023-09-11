@@ -5,5 +5,7 @@ from django.db import models
 class Item(models.Model):
     name = models.CharField(max_length=255)
     amount = models.IntegerField()
-    type = models.TextField()
+    rented = models.IntegerField()
+    available = amount - rented
+    category = models.TextField()
     description = models.TextField()
