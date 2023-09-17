@@ -285,3 +285,19 @@ MVVM atau Model View ViewModel adalah pola arsitektur dalam membuat dan membangu
 
 ## 7. Alasan mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern
 JSON sering digunakan dalam pertukaran data antara aplikasi web modern karena JSON memiliki format yang lebih ringkas dan mudah dibaca oleh manusia. Selain kemudahannya untuk dibaca, ukuran data JSON juga cenderung lebih kecil dibandingkan dengan format lain. Hal ini menjadi penting karena aplikasi web modern harus memiliki kinerja tinggi, untuk mencapai hal tersebut, pengurangan beban pada jaringan akan sangat berpengaruh pada kinerja aplikasi web. Penggunaan JSON juga memungkinkan programmer untuk menyusun data secara hierarkis saat kompleksitas data dibutuhkan. Selain kelebihan-kelebihan yang telah disebutkan sebelumnya, JSON juga merupakan format data yang dapat digunakan lintas platform dan didukung penggunaannya pada hampir semua bahasa pemrograman. Kelebihannya ini membuat JSON unggul dalam pertukaran data antara aplikasi yang berjalan di berbagai lingkungan pengembangan.
+
+## 8. Mengakses kelima URL menggunakan Postman
+### 1. path('create-item', create_item, name='create_item'): http://localhost:8000/create-item
+![Screenshot 2023-09-18 002632](https://github.com/eelizabethmichelle/librory/assets/124945174/416e5ac0-7498-46cb-80bd-5de40995ee37)
+### 2. path('xml/', show_xml, name='show_xml'): http://localhost:8000/xml/
+![Screenshot 2023-09-18 003318](https://github.com/eelizabethmichelle/librory/assets/124945174/29b18b17-f078-478e-be16-488f0c492f6a)
+![Screenshot 2023-09-18 003511](https://github.com/eelizabethmichelle/librory/assets/124945174/66f46cad-8fa5-4d78-af52-380240563ca1)
+### 3. path('json/', show_json, name='show_json'): http://localhost:8000/json/
+![Screenshot 2023-09-18 003402](https://github.com/eelizabethmichelle/librory/assets/124945174/f9a8f852-4a3f-4601-a4cf-d09591e1ad69)
+![Screenshot 2023-09-18 003436](https://github.com/eelizabethmichelle/librory/assets/124945174/a9cf9c59-d95d-413e-a9a7-b50b750c9628)
+### 4. path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'): http://localhost:8000/xml/1
+![Screenshot 2023-09-18 003603](https://github.com/eelizabethmichelle/librory/assets/124945174/042f121e-42de-4085-ba21-52387611d82f)
+![Screenshot 2023-09-18 003616](https://github.com/eelizabethmichelle/librory/assets/124945174/a8b1fd72-ae19-43fa-992f-3f175e99dbab)
+### 5. path('json/<int:id>/', show_json_by_id, name='show_json_by_id'): http://localhost:8000/json/1
+![Screenshot 2023-09-18 003636](https://github.com/eelizabethmichelle/librory/assets/124945174/d2d18d68-7eeb-4a6c-8a76-3fcb63358aa6)
+![Screenshot 2023-09-18 003649](https://github.com/eelizabethmichelle/librory/assets/124945174/27fdfdc0-2951-4bd3-a391-2e62648eaf70)
