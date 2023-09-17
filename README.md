@@ -42,11 +42,11 @@ Untuk melakukan deployment ke Adaptable, saya terlebih dahulu **melakukan add, p
 
 ### Tugas 3
 #### h. Membuat input form untuk menambahkan objek model pada app sebelumnya.
-Sebelum saya membuat form registrasi, saya membuat skeleton sebagai kerangka views dari aplikasi saya agar desain lebih konsisten dan redundansi kode dapat diminimalisir. Saya membuat skeleton dengan membuat foler ```templates``` pada root folder dan menambahkan berkas ```base.html``` pada folder tersebut. Bekas ```base.html``` akan digunakan sebagai kerangka umum untuk halaman aplikasi lainnya dalam proyek.
+Sebelum saya membuat form registrasi, saya **membuat skeleton** sebagai kerangka views dari aplikasi saya agar desain lebih konsisten dan redundansi kode dapat diminimalisir. Saya membuat skeleton dengan **membuat folder ```templates``` pada root folder** dan **menambahkan berkas ```base.html```** pada folder tersebut. Berkas ```base.html``` akan digunakan sebagai kerangka umum untuk halaman aplikasi lainnya dalam proyek.
 
-Setelah itu, agar skeleton dapat terdeteksi sebagai berkas template dan digunakan kerangka umum, saya menambahkan kode ```'DIRS': [BASE_DIR / 'templates']``` ke dalam variabel ```TEMPLATES``` di dalam berkas ```settings.py``` pada subdirektori ```librory```. Saya juga mengganti kode pada berkas ```main.html``` pada subdirektori ```templates``` yang ada pada direktori ```main``` dengan menggunakan ```main.html``` sebagai template utama.
+Setelah itu, agar skeleton dapat terdeteksi sebagai berkas template dan digunakan kerangka umum, saya menambahkan kode **```'DIRS': [BASE_DIR / 'templates']``` ke dalam variabel ```TEMPLATES```** di dalam berkas ```settings.py``` pada subdirektori ```librory```. Saya juga mengganti kode pada berkas ```main.html``` pada subdirektori ```templates``` yang ada pada direktori ```main``` dengan menggunakan ```main.html``` sebagai template utama.
 
-Dalam pembuatan form registrasi, saya membuat berkas baru dengan nama ```forms.py``` pada direktori ```main``` untuk membuat struktur form yang dapat menerima data item baru. Saya menambahkan kode
+Dalam pembuatan form registrasi, saya **membuat berkas baru dengan nama ```forms.py``` pada direktori ```main```** untuk membuat struktur form yang dapat menerima data item baru. Saya menambahkan kode
 ```
 from django.forms import ModelForm
 from main.models import Item
@@ -59,13 +59,13 @@ class ProductForm(ModelForm):
 - ```model = Item``` ditujukan agar isi dari form akan disimpan menjadi sebuah objek Item.
 - ```fields = ["name", "amount", "rented", "category", "description"]``` menunjukkan field dari model Item yang digunakan untuk form.
 
-Setelah itu saya membuka berkas ```views.py``` yang ada pada folder ```main``` dan mengimport beberapa modul sebagai berikut:
+Setelah itu saya **membuka berkas ```views.py```** yang ada pada folder ```main``` dan **mengimport beberapa modul** sebagai berikut:
 ```
 from django.http import HttpResponseRedirect
 from main.forms import ProductForm
 from django.urls import reverse
 ```
-Saya juga membuat fungsi baru dengan nama ```create_item``` yang menerima parameter ```request``` dan menambahkan kode sebagai berikut:
+Saya juga **membuat fungsi baru dengan nama ```create_item```** yang menerima parameter ```request``` dan menambahkan kode sebagai berikut:
 ```
 def create_item(request):
     form = ProductForm(request.POST or None)
@@ -82,9 +82,9 @@ def create_item(request):
 - ```form.save()``` digunakan untuk membuat dan menyimpan data dari form
 - ```return HttpResponseRedirect(reverse('main:show_main'))``` digunakan untuk melakukan redirect ke halaman aplikasi awal setelah data form berhasil disimpan
 
-Setelah itu, saya menambahkan kode ```items = Item.objects.all()``` pada fungsi ```show_main``` di berkas ```views.py``` pada folder ```main``` untuk mengambil seluruh objek Item yang telah tersimpan pada database. Setelah memperbarui fungsi ```show_main``` dan membuat fungsi ```create_item```, saya membuka berkas ```urls.py``` pada folder ```main``` dan mengimport fungsi ```create_item``` yang telah dibuat sebelumnya. Saya juga menambahkan path url ke dalam ```urlpatterns``` agar fungsi ```create_item``` dapat diakses. Saya menambahkan path url dengan menambahkan kode ```path('create-item', create_item, name='create_item'),```.
+Setelah itu, saya **menambahkan kode ```items = Item.objects.all()```** pada fungsi ```show_main``` di berkas ```views.py``` pada folder ```main``` untuk mengambil seluruh objek Item yang telah tersimpan pada database. Setelah memperbarui fungsi ```show_main``` dan membuat fungsi ```create_item```, saya **membuka berkas ```urls.py```** pada folder ```main``` dan **mengimport fungsi ```create_item```** yang telah dibuat sebelumnya. Saya juga menambahkan path url ke dalam ```urlpatterns``` agar fungsi ```create_item``` dapat diakses. Saya **menambahkan path url dengan menambahkan kode ```path('create-item', create_item, name='create_item'),```**.
 
-Kemudian saya membuat berkas ```create_item.html``` pada direktori ```main/templates``` dan mengisi berkas tersebut dengan kode sebagai berikut:
+Kemudian saya **membuat berkas ```create_item.html```** pada direktori ```main/templates``` dan mengisi berkas tersebut dengan kode sebagai berikut:
 ```
 {% extends 'base.html' %} 
 
@@ -106,14 +106,14 @@ Kemudian saya membuat berkas ```create_item.html``` pada direktori ```main/templ
 
 {% endblock %}
 ```
-- ```<form method="POST">`` digunakan untuk menandakan block untuk form dengan metode POST
-- ```{% csrf_token %}`` digunakan sebagai security untuk mencegah serangan berbahaya
-- ```{{ form.as_table }}``` digunakan untuk menampilkan fields form yang sudah dibuat pada ```forms.py`` sebagai table
+- ```<form method="POST">``` digunakan untuk menandakan block untuk form dengan metode POST
+- ```{% csrf_token %}``` digunakan sebagai security untuk mencegah serangan berbahaya
+- ```{{ form.as_table }}``` digunakan untuk menampilkan fields form yang sudah dibuat pada ```forms.py``` sebagai table
 - ```<input type="submit" value="Add Item"/>``` digunakan sebagai tombol submit untuk mengirimkan request ke view ```create_item(request)``
 
 
 #### i. Tambahkan 5 fungsi views untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID
-Pertama-tama, saya membuka berkas ```views.py``` pada folder ```main``` dan mengimport ```HttpResponse``` untuk menginformasikan ```client``` dan ```Serializer``` untuk mengubah objek ke dalam suatu format yang memudahkan transmisi data dalam jaringan atau penyimpanan dalam database. Untuk mengimport keduanya, saya menambahkan kode sebagai berikut:
+Pertama-tama, saya membuka berkas ```views.py``` pada folder ```main``` dan **mengimport ```HttpResponse```** untuk menginformasikan ```client``` dan ```Serializer``` untuk mengubah objek ke dalam suatu format yang memudahkan transmisi data dalam jaringan atau penyimpanan dalam database. Untuk mengimport keduanya, saya menambahkan kode sebagai berikut:
 ```
 from django.http import HttpResponse
 from django.core import serializers
@@ -126,7 +126,7 @@ from django.core import serializers
 - Untuk melihat objek yang ditambahkan dalma format JSON by ID saya membuat fungsi ```show_xml_by_id```
 
 ##### Format HTML
-Saya menambahkan kode di dalam ```{% block content %}``` pada berkas ```main.html``` untuk menampilkan data produk dalam bentuk table serta tombol ```Add New Item``` yang akan redirect ke halaman form. Kode yang ditambahkan adalah sebagai berikut:
+Saya **menambahkan kode di dalam ```{% block content %}```** pada berkas ```main.html``` untuk menampilkan data produk dalam bentuk table serta tombol ```Add New Item``` yang akan redirect ke halaman form. Kode yang ditambahkan adalah sebagai berikut:
 ```
 <table>
     <tr>
@@ -162,7 +162,7 @@ Saya menambahkan kode di dalam ```{% block content %}``` pada berkas ```main.htm
 ```
 
 ##### Format XML
-Saya membuat fungsi bernama ```show_xml``` yang menerima parameter request dengan kode sebagai berikut:
+Saya **membuat fungsi bernama ```show_xml```** pada berkas ```views.py``` dalam folder ```main``` yang menerima parameter request dengan kode sebagai berikut:
 ```
 def show_xml(request):
     data = Item.objects.all()
@@ -172,7 +172,7 @@ def show_xml(request):
 - ```return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")``` digunakan untuk mereturn ```HttpResponse``` berisi parameter data hasil query yang diserialisasi oleh ```serializers``` menjadi XML
 
 ##### Format JSON
-Saya membuat fungsi bernama ```show_xml``` yang menerima parameter request dengan kode sebagai berikut:
+Saya **membuat fungsi bernama ```show_json```** pada berkas ```views.py``` dalam folder ```main``` yang menerima parameter request dengan kode sebagai berikut:
 ```
 def show_json(request):
     data = Item.objects.all()
@@ -182,6 +182,7 @@ def show_json(request):
 - ```return HttpResponse(serializers.serialize("json", data), content_type="application/json")``` digunakan untuk mereturn ```HttpResponse``` berisi parameter data hasil query yang diserialisasi oleh ```serializers``` menjadi JSON
 
 ##### Format XML by ID
+Saya **membuat fungsi bernama ```show_xml_by_id```** pada berkas ```views.py``` dalam folder ```main``` yang menerima parameter request dan id dengan kode sebagai berikut:
 ```
 def show_xml_by_id(request, id):
     data = Item.objects.filter(pk=id)
@@ -191,6 +192,7 @@ def show_xml_by_id(request, id):
 - ```return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")``` digunakan untuk mereturn ```HttpResponse``` berisi parameter data hasil query yang diserialisasi oleh ```serializers``` menjadi XML
 
 ##### Format JSON by ID
+Saya **membuat fungsi bernama ```show_json_by_id```** pada berkas ```views.py``` dalam folder ```main``` yang menerima parameter request dan id dengan kode sebagai berikut:
 ```
 def show_json_by_id(request, id):
     data = Item.objects.filter(pk=id)
@@ -200,11 +202,11 @@ def show_json_by_id(request, id):
 - ```return HttpResponse(serializers.serialize("json", data), content_type="application/json")``` digunakan untuk mereturn ```HttpResponse``` berisi parameter data hasil query yang diserialisasi oleh ```serializers``` menjadi JSON
 
 #### j. Membuat routing URL untuk masing-masing views yang telah ditambahkan
-Setelah selesai membuat seluruh fungsi yang dibutuhkan, saya membuka berkas ```urls.py``` pada folder ```main``` dan mengimport seluruh fungsi yang telah dibuat sebelumnya. Saya mengimport seluruh fungsi dengan kode sebagai berikut:
+Setelah selesai membuat seluruh fungsi yang dibutuhkan, saya membuka berkas ```urls.py``` pada folder ```main``` dan **mengimport seluruh fungsi yang telah dibuat** sebelumnya. Saya mengimport seluruh fungsi dengan kode sebagai berikut:
 ```
 from main.views import show_main, create_item, show_xml, show_json, show_xml_by_id, show_json_by_id
 ```
-Setelah itu, saya menambahkan path url ke dalam ```urlpatterns``` untuk mengakses fungsi yang sudah diimport dengan kode sebagai berikut:
+Setelah itu, saya **menambahkan path url ke dalam ```urlpatterns```** untuk mengakses fungsi yang sudah diimport dengan kode sebagai berikut:
 ```
 urlpatterns = [
     path('', show_main, name='show_main'),
