@@ -6,6 +6,7 @@
 ###### Aplikasi Adaptable yang sudah di-deploy: [link](https://librory.adaptable.app)
 
 ## 1. Cara mengimplementasikan checklist:
+### Tugas 2
 #### a. Membuat sebuah proyek Django baru
 Untuk dapat membuat sebuah proyek Django baru, dibutuhkan sebuah direktori yang telah terhubung ke suatu repositori Git. Maka dari itu, saya **membuat direktori dengan nama ```librory``` yang terhubung dengan repositori Git yang bernama ```librory```** juga. Setelah itu, saya membuat dan **mengaktifkan virtual environment** pada direktori ```librory``` agar package dan dependencies dari aplikasi tidak bertabrakan dengan versi lain yang ada di komputer saya.
 
@@ -21,10 +22,10 @@ Untuk melakukan routing, saya **membuat berkas ```urls.py``` di dalam direktori 
 1. ```name``` dengan tipe CharField: judul buku
 2. ```amount``` dengan tipe IntegerField: jumlah buku
 3. ```rented``` dengan tipe IntegerField: jumlah buku yang disewa
-4. ```category``` dengan tipe TextField: kategori buku
+4. ```category``` dengan tipe CharField: kategori buku
 5. ```description``` dengan tipe TextField: deskripsi/sinopsis buku
 
-Untuk membuat model pada aplikasi ```main``` sesuai dengan class dan atribut yang saya inginkan, saya terlebih dahulu **meng-import modul ```models``` dari modul ```django.db```**. Setelah itu, saya **membuat class dengan nama ```Item``` yang menerima parameter ```models.Model```**, parameter tersebut merupakan kelas dasar yang akan digunakan untuk mendefinisikan model dalam Django. Di dalam class ```Item```, saya **menambahkan atribut ```name``` dengan tipe CharField** yang hanya menerika karakter dengan panjang maksimal 255 karakter, **atribut ```amount``` dengan tipe IntegerField**, **atribut ```rented``` dengan tipe IntegerField**, **atribut ```category``` dengan tipe TextField**, dan **atribut ```description``` dengan tipe TextField**.
+Untuk membuat model pada aplikasi ```main``` sesuai dengan class dan atribut yang saya inginkan, saya terlebih dahulu **meng-import modul ```models``` dari modul ```django.db```**. Setelah itu, saya **membuat class dengan nama ```Item``` yang menerima parameter ```models.Model```**, parameter tersebut merupakan kelas dasar yang akan digunakan untuk mendefinisikan model dalam Django. Di dalam class ```Item```, saya **menambahkan atribut ```name``` dengan tipe CharField** yang hanya menerika karakter dengan panjang maksimal 255 karakter, **atribut ```amount``` dengan tipe IntegerField**, **atribut ```rented``` dengan tipe IntegerField**, **atribut ```category``` dengan tipe CharField** yang hanya menerika karakter dengan panjang maksimal 255 karakter, dan **atribut ```description``` dengan tipe TextField**.
 
 #### e. Membuat sebuah fungsi pada views.py untuk dikembalikan ke dalam sebuah template HTML yang menampilkan nama aplikasi, nama, dan kelas
 Sebelum saya membuat fungsi pada berkas ```views.py```, saya terlebih dahulu **meng-import ```render``` dari modul ```django.shortcuts```** untuk me-render tampilan HTML dengan data yang akan diintegrasikan melalui fungsi. Setelah itu, saya **membuat fungsi dengan nama ```show_main``` pada berkas ```views.py```** sebagai data acuan yang kemudian akan ditampilkan pada tampilan ```HTML```. 
@@ -38,6 +39,182 @@ Setelah berhasil melakukan set up pada aplikasi ```main```, saya mengonfigurasi 
 
 #### g. Melakukan deployment ke Adaptable terhadap aplikasi yang sudah dibuat
 Untuk melakukan deployment ke Adaptable, saya terlebih dahulu **melakukan add, push, dan commit perubahan pada direktori kepada repositori**. Hal ini dilakukan karena deployment akan dihubungkan dengan akun GitHub serta repositori yang berkaitan. Setelah selesai menambahkan perubahan pada repositori, saya **membuat akun Adaptable.io** menggunakan akun GitHub dan **menekan tombol ```New App```**. Saya **memilih opsi ```Connect an Existing Repository```** dan **memilih repositori ```librory```** karena saya ingin men-deploy aplikasi tersebut. Saya **memilih branch ```main```** sebagai deployment branch, kemudian saya **memilih ```Python App Template```** sebagai template deployment, serta **```PostgreSQL```** sebagai tipe basis data yang akan digunakan. Setelah itu, saya **memilih versi ```Python 3.10```** sesuai versi Python yang saya install dan **memasukkan perintah ```python manage.py migrate && gunicorn librory.wsgi```** pada bagian Start Command. Setelah itu, saya **memasukkan ```librory``` sebagai nama aplikasi**, **mencentang bagian ```HTTP Listener on PORT```**, dan men-deploy aplikasi dengan **menekan tombol ```Deploy App```**. Apabila terdapat perubahan/pembaruan pada repositori, saya akan menekan tombol dengan tiga titik dan me-redeploy aplikasi.
+
+### Tugas 3
+#### h. Membuat input form untuk menambahkan objek model pada app sebelumnya.
+Sebelum saya membuat form registrasi, saya membuat skeleton sebagai kerangka views dari aplikasi saya agar desain lebih konsisten dan redundansi kode dapat diminimalisir. Saya membuat skeleton dengan membuat foler ```templates``` pada root folder dan menambahkan berkas ```base.html``` pada folder tersebut. Bekas ```base.html``` akan digunakan sebagai kerangka umum untuk halaman aplikasi lainnya dalam proyek.
+
+Setelah itu, agar skeleton dapat terdeteksi sebagai berkas template dan digunakan kerangka umum, saya menambahkan kode ```'DIRS': [BASE_DIR / 'templates']``` ke dalam variabel ```TEMPLATES``` di dalam berkas ```settings.py``` pada subdirektori ```librory```. Saya juga mengganti kode pada berkas ```main.html``` pada subdirektori ```templates``` yang ada pada direktori ```main``` dengan menggunakan ```main.html``` sebagai template utama.
+
+Dalam pembuatan form registrasi, saya membuat berkas baru dengan nama ```forms.py``` pada direktori ```main``` untuk membuat struktur form yang dapat menerima data item baru. Saya menambahkan kode
+```
+from django.forms import ModelForm
+from main.models import Item
+
+class ProductForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = ["name", "amount", "rented", "category", "description"]
+```
+- ```model = Item``` ditujukan agar isi dari form akan disimpan menjadi sebuah objek Item.
+- ```fields = ["name", "amount", "rented", "category", "description"]``` menunjukkan field dari model Item yang digunakan untuk form.
+
+Setelah itu saya membuka berkas ```views.py``` yang ada pada folder ```main``` dan mengimport beberapa modul sebagai berikut:
+```
+from django.http import HttpResponseRedirect
+from main.forms import ProductForm
+from django.urls import reverse
+```
+Saya juga membuat fungsi baru dengan nama ```create_item``` yang menerima parameter ```request``` dan menambahkan kode sebagai berikut:
+```
+def create_item(request):
+    form = ProductForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "create_item.html", context)
+```
+- ```form = ProductForm(request.POST or None)``` digunakan untuk membuat ```ProductForm``` baru dengan mamsukkan QueryDict berdasarkan input dari user pada ```request.POST```
+- ```form.is_valid()``` digunakan untuk memvalidasi isi input dari form
+- ```form.save()``` digunakan untuk membuat dan menyimpan data dari form
+- ```return HttpResponseRedirect(reverse('main:show_main'))``` digunakan untuk melakukan redirect ke halaman aplikasi awal setelah data form berhasil disimpan
+
+Setelah itu, saya menambahkan kode ```items = Item.objects.all()``` pada fungsi ```show_main``` di berkas ```views.py``` pada folder ```main``` untuk mengambil seluruh objek Item yang telah tersimpan pada database. Setelah memperbarui fungsi ```show_main``` dan membuat fungsi ```create_item```, saya membuka berkas ```urls.py``` pada folder ```main``` dan mengimport fungsi ```create_item``` yang telah dibuat sebelumnya. Saya juga menambahkan path url ke dalam ```urlpatterns``` agar fungsi ```create_item``` dapat diakses. Saya menambahkan path url dengan menambahkan kode ```path('create-item', create_item, name='create_item'),```.
+
+Kemudian saya membuat berkas ```create_item.html``` pada direktori ```main/templates``` dan mengisi berkas tersebut dengan kode sebagai berikut:
+```
+{% extends 'base.html' %} 
+
+{% block content %}
+<h1>Add New Item</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Add Item"/>
+            </td>
+        </tr>
+    </table>
+</form>
+
+{% endblock %}
+```
+- ```<form method="POST">`` digunakan untuk menandakan block untuk form dengan metode POST
+- ```{% csrf_token %}`` digunakan sebagai security untuk mencegah serangan berbahaya
+- ```{{ form.as_table }}``` digunakan untuk menampilkan fields form yang sudah dibuat pada ```forms.py`` sebagai table
+- ```<input type="submit" value="Add Item"/>``` digunakan sebagai tombol submit untuk mengirimkan request ke view ```create_item(request)``
+
+
+#### i. Tambahkan 5 fungsi views untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID
+Pertama-tama, saya membuka berkas ```views.py``` pada folder ```main``` dan mengimport ```HttpResponse``` untuk menginformasikan ```client``` dan ```Serializer``` untuk mengubah objek ke dalam suatu format yang memudahkan transmisi data dalam jaringan atau penyimpanan dalam database. Untuk mengimport keduanya, saya menambahkan kode sebagai berikut:
+```
+from django.http import HttpResponse
+from django.core import serializers
+```
+
+- Untuk melihat objek yang ditambahkan dalam format HTML saya menggunakan fungsi ```show_main```
+- Untuk melihat objek yang ditambahkan dalam format XML saya membuat fungsi ```show_xml```
+- Untuk melihat objek yang ditambahkan dalam format JSON saya membuat fungsi ```show_json```
+- Untuk melihat objek yang ditambahkan dalam format XML by ID saya membuat fungsi ```show_xml_by_id```
+- Untuk melihat objek yang ditambahkan dalma format JSON by ID saya membuat fungsi ```show_xml_by_id```
+
+##### Format HTML
+Saya menambahkan kode di dalam ```{% block content %}``` pada berkas ```main.html``` untuk menampilkan data produk dalam bentuk table serta tombol ```Add New Item``` yang akan redirect ke halaman form. Kode yang ditambahkan adalah sebagai berikut:
+```
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Rented</th>
+        <th>Category</th>
+        <th>Description</th>
+    </tr>
+
+    {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
+
+    {% for item in items %}
+        <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.rented}}</td>
+            <td>{{item.category}}</td>
+            <td>{{item.description}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<br />
+
+<a href="{% url 'main:create_item' %}">
+    <button>
+        Add New Item
+    </button>
+</a>
+
+{% endblock content %}
+```
+
+##### Format XML
+Saya membuat fungsi bernama ```show_xml``` yang menerima parameter request dengan kode sebagai berikut:
+```
+def show_xml(request):
+    data = Item.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+```
+- ```data = Item.objects.all()``` digunakan untuk menyimpan hasil query dari seluruh data yang ada pada Item
+- ```return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")``` digunakan untuk mereturn ```HttpResponse``` berisi parameter data hasil query yang diserialisasi oleh ```serializers``` menjadi XML
+
+##### Format JSON
+Saya membuat fungsi bernama ```show_xml``` yang menerima parameter request dengan kode sebagai berikut:
+```
+def show_json(request):
+    data = Item.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+```
+- ```data = Item.objects.all()``` digunakan untuk menyimpan hasil query dari seluruh data yang ada pada Item
+- ```return HttpResponse(serializers.serialize("json", data), content_type="application/json")``` digunakan untuk mereturn ```HttpResponse``` berisi parameter data hasil query yang diserialisasi oleh ```serializers``` menjadi JSON
+
+##### Format XML by ID
+```
+def show_xml_by_id(request, id):
+    data = Item.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+```
+- ```data = Item.objects.filter(pk=id)``` digunakan untuk menyimpan hasil query dari data yang ada pada Item sesuai dengan id
+- ```return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")``` digunakan untuk mereturn ```HttpResponse``` berisi parameter data hasil query yang diserialisasi oleh ```serializers``` menjadi XML
+
+##### Format JSON by ID
+```
+def show_json_by_id(request, id):
+    data = Item.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+```
+- ```data = Item.objects.filter(pk=id)``` digunakan untuk menyimpan hasil query dari data yang ada pada Item sesuai dengan id
+- ```return HttpResponse(serializers.serialize("json", data), content_type="application/json")``` digunakan untuk mereturn ```HttpResponse``` berisi parameter data hasil query yang diserialisasi oleh ```serializers``` menjadi JSON
+
+#### j. Membuat routing URL untuk masing-masing views yang telah ditambahkan
+Setelah selesai membuat seluruh fungsi yang dibutuhkan, saya membuka berkas ```urls.py``` pada folder ```main``` dan mengimport seluruh fungsi yang telah dibuat sebelumnya. Saya mengimport seluruh fungsi dengan kode sebagai berikut:
+```
+from main.views import show_main, create_item, show_xml, show_json, show_xml_by_id, show_json_by_id
+```
+Setelah itu, saya menambahkan path url ke dalam ```urlpatterns``` untuk mengakses fungsi yang sudah diimport dengan kode sebagai berikut:
+```
+urlpatterns = [
+    path('', show_main, name='show_main'),
+    path('create-product', create_item, name='create_item'),
+    path('xml/', show_xml, name='show_xml'),
+    path('json/', show_json, name='show_json'),
+    path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<int:id>/', show_json_by_id, name='show_json_by_id')
+]
+```
 
 ## 2. Bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan kaitan antara urls.py, views.py, models.py, dan berkas HTML
 
@@ -86,3 +263,23 @@ MVVM atau Model View ViewModel adalah pola arsitektur dalam membuat dan membangu
 3. MVVM
     * ```View``` hanya menampilkan data dan tidak mengandung logika
     * ```ViewModel``` berfungsi sebagai perantara antara Model dan View serta mengontrol logika pemetaan data
+
+## 5. Perbedaan antara form ```POST``` dan form ```GET``` dalam Django
+#### POST
+- Data yang dikirim dari form akan dikirim sebagai ```request body``` dalam request HTTP sehingga tidak terlihat dalam URL
+- Biasanya digunakan untuk mengirim form untuk membuat, mengubah, atau menghapus data dalam database
+
+#### GET
+- Data yang dikirim dari form akan ditambahkan ke URL sebagai query string
+- Biasanya digunakan untuk mengambil data dari server tanpa mempengaruhi data yang sudah ada
+
+## 6. Perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data
+#### XML
+- Berisi informasi yang dibungkus di dalam tag. Programmer perlu menulis program untuk mengirim, menerima, menyimpan, atau menampilkan informasi tersebut
+#### JSON
+- Berisi informasi dengan format berbentuk text. Data disimpan dalam bentuk key dan value
+#### HTML
+- Berbasis tag yang digunakan untuk mendefinisikan elemen-elemen pada halaman web.
+
+## 7. Alasan mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern
+JSON sering digunakan dalam pertukaran data antara aplikasi web modern karena JSON memiliki format yang lebih ringkas dan mudah dibaca oleh manusia. Selain kemudahannya untuk dibaca, ukuran data JSON juga cenderung lebih kecil dibandingkan dengan format lain. Hal ini menjadi penting karena aplikasi web modern harus memiliki kinerja tinggi, untuk mencapai hal tersebut, pengurangan beban pada jaringan akan sangat berpengaruh pada kinerja aplikasi web. Penggunaan JSON juga memungkinkan programmer untuk menyusun data secara hierarkis saat kompleksitas data dibutuhkan. Selain kelebihan-kelebihan yang telah disebutkan sebelumnya, JSON juga merupakan format data yang dapat digunakan lintas platform dan didukung penggunaannya pada hampir semua bahasa pemrograman. Kelebihannya ini membuat JSON unggul dalam pertukaran data antara aplikasi yang berjalan di berbagai lingkungan pengembangan.
