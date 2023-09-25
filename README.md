@@ -7,41 +7,41 @@
 
 ## 1. Cara mengimplementasikan checklist:
 ### Tugas 2
-#### a. Membuat sebuah proyek Django baru
+#### 2.1 Membuat sebuah proyek Django baru
 Untuk dapat membuat sebuah proyek Django baru, dibutuhkan sebuah direktori yang telah terhubung ke suatu repositori Git. Maka dari itu, saya **membuat direktori dengan nama ```librory``` yang terhubung dengan repositori Git yang bernama ```librory```** juga. Setelah itu, saya membuat dan **mengaktifkan virtual environment** pada direktori ```librory``` agar package dan dependencies dari aplikasi tidak bertabrakan dengan versi lain yang ada di komputer saya.
 
 Setelah berhasil melakukan set up, saya membuat berkas yang berisi dependencies yang akan saya butuhkan dalam mengembangkan aplikasi, yaitu **django, gunicorn, whinoise, psycopg2-binary, requests, dan urllib3**. Melalui berkas tersebut, saya **meng-install dependencies** yang telah dispesifikasikan dan **membuat proyek Django dengan nama ```librory```**. Proses tersebut saya lakukan dengan menjalankan perintah **```django-admin startproject librory .```**, perintah tersebut akan membuat proyek Django baru dengan nama ```librory```. Titik yang dituliskan pada akhir perintah dimaksudkan agar proyek dibuat tepat di direktori di mana saya sedang bekerja tanpa membuat sebuah folder untuk proyek tersebut.
 
-#### b. Membuat aplikasi dengan nama main pada proyek tersebut
+#### 2.2 Membuat aplikasi dengan nama ```main``` pada proyek tersebut
 Sama seperti yang sebelumnya dilakukan saat membuat sebuah proyek Django baru, virtual environment pada direktori terkait, dalam hal ini direktori ```librory```, harus diaktifkan terlebih dahulu. Setelah itu, saya **membuat aplikasi dengan nama ```main```** dengan menjalankan perintah **```python manage.py startapp main```**. Perintah tersebut akan membuat aplikasi baru bernama ```main``` di dalam proyek Django terkait dan aplikasi akan berada dalam konteks dan pengaturan yang sama dengan proyek. Akan tetapi, meskipun aplikasi ```main``` telah berhasil dibuat, aplikasi belum terdaftar ke dalam proyek, maka dari itu saya **menambahkan aplikasi ```main``` ke dalam list ```INSTALLED_APPS``` yang berada di berkas ```settings.py```**.
 
-#### c. Melakukan routing pada proyek agar dapat menjalankan aplikasi main
-Untuk melakukan routing, saya **membuat berkas ```urls.py``` di dalam direktori ```main```** dan **mengimport ```path``` dari ```django.urls```** untuk mendefinisikan pola URL. Berkas ```urls.py``` yang dibuat di dalam direktori ```main``` ditujukan untuk mengatur rute URL pada aplikasi ```main```. Sebelumnya, pada berkas ```views.py```, saya telah menambahkan fungsi ```show_main``` sebagai tampilan, maka dari itu saya **meng-import fungsi ```show_main```** untuk kemudian ditampilkan ketika URL terkait diakses. Saya juga **menambahkan variabel bernama ```app_name```** yang kemudian digunakan untuk memberikan nama unik pada pola URL dalam aplikasi. 
+#### 2.3 Melakukan routing pada proyek agar dapat menjalankan aplikasi main
+Untuk melakukan routing, saya **membuat berkas ```urls.py``` di dalam direktori ```main```** dan **mengimport ```path``` dari ```django.urls```** untuk mendefinisikan pola URL. Berkas ```urls.py``` yang dibuat di dalam direktori ```main``` ditujukan untuk mengatur rute URL pada aplikasi ```main```. Sebelumnya, pada berkas ```views.py```, saya telah menambahkan fungsi ```show_main``` sebagai tampilan, maka dari itu saya **mengimport fungsi ```show_main```** untuk kemudian ditampilkan ketika URL terkait diakses. Saya juga **menambahkan variabel bernama ```app_name```** yang kemudian digunakan untuk memberikan nama unik pada pola URL dalam aplikasi. 
 
-#### d. Membuat model pada aplikasi main dengan nama Item dan memiliki atribut:
+#### 2.4 Membuat model pada aplikasi main dengan nama ```Item``` dan memiliki atribut:
 1. ```name``` dengan tipe CharField: judul buku
 2. ```amount``` dengan tipe IntegerField: jumlah buku
 3. ```rented``` dengan tipe IntegerField: jumlah buku yang disewa
 4. ```category``` dengan tipe CharField: kategori buku
 5. ```description``` dengan tipe TextField: deskripsi/sinopsis buku
 
-Untuk membuat model pada aplikasi ```main``` sesuai dengan class dan atribut yang saya inginkan, saya terlebih dahulu **meng-import modul ```models``` dari modul ```django.db```**. Setelah itu, saya **membuat class dengan nama ```Item``` yang menerima parameter ```models.Model```**, parameter tersebut merupakan kelas dasar yang akan digunakan untuk mendefinisikan model dalam Django. Di dalam class ```Item```, saya **menambahkan atribut ```name``` dengan tipe CharField** yang hanya menerika karakter dengan panjang maksimal 255 karakter, **atribut ```amount``` dengan tipe IntegerField**, **atribut ```rented``` dengan tipe IntegerField**, **atribut ```category``` dengan tipe CharField** yang hanya menerika karakter dengan panjang maksimal 255 karakter, dan **atribut ```description``` dengan tipe TextField**.
+Untuk membuat model pada aplikasi ```main``` sesuai dengan class dan atribut yang saya inginkan, saya terlebih dahulu **mengimport modul ```models``` dari modul ```django.db```**. Setelah itu, saya **membuat class dengan nama ```Item``` yang menerima parameter ```models.Model```**, parameter tersebut merupakan kelas dasar yang akan digunakan untuk mendefinisikan model dalam Django. Di dalam class ```Item```, saya **menambahkan atribut ```name``` dengan tipe CharField** yang hanya menerika karakter dengan panjang maksimal 255 karakter, **atribut ```amount``` dengan tipe IntegerField**, **atribut ```rented``` dengan tipe IntegerField**, **atribut ```category``` dengan tipe CharField** yang hanya menerika karakter dengan panjang maksimal 255 karakter, dan **atribut ```description``` dengan tipe TextField**.
 
-#### e. Membuat sebuah fungsi pada views.py untuk dikembalikan ke dalam sebuah template HTML yang menampilkan nama aplikasi, nama, dan kelas
-Sebelum saya membuat fungsi pada berkas ```views.py```, saya terlebih dahulu **meng-import ```render``` dari modul ```django.shortcuts```** untuk me-render tampilan HTML dengan data yang akan diintegrasikan melalui fungsi. Setelah itu, saya **membuat fungsi dengan nama ```show_main``` pada berkas ```views.py```** sebagai data acuan yang kemudian akan ditampilkan pada tampilan ```HTML```. 
+#### 2.5 Membuat sebuah fungsi pada ```views.py``` untuk dikembalikan ke dalam sebuah template ```HTML``` yang menampilkan nama aplikasi, nama, dan kelas
+Sebelum saya membuat fungsi pada berkas ```views.py```, saya terlebih dahulu **mengimport ```render``` dari modul ```django.shortcuts```** untuk me-render tampilan HTML dengan data yang akan diintegrasikan melalui fungsi. Setelah itu, saya **membuat fungsi dengan nama ```show_main``` pada berkas ```views.py```** sebagai data acuan yang kemudian akan ditampilkan pada tampilan ```HTML```. 
 
 Saya **membuat sebuah dictionary dengan nama ```context```** yang berisi **key ```app_name``` dengan value ```librory```**, **key ```name``` dengan value ```Michelle Elizabeth Amanda Hutasoit```**, dan **key ```class``` dengan value ```PBP C```**. **Fungsi ```show_main``` akan me-return ```render(request, "main.html", context)```** di mana fungsi ```render``` akan me-render tampilan berdasarkan request/objek HTTP yang dikirim oleh pengguna pada berkas template ```main.html```, dengan dictionary ```context``` yang berisi data yang akan digunakan dan ditampilkan dalam tampilan dinamis.
 
 Setelah selesai melakukan set up pada berkas ```views.py```, saya kemudian memodifikasi template pada berkas ```main.html``` agar data pada dictionary ```context``` dapat digunakan. Saya **menambahkan ```{{ app_name }}```, ```{{ name }}```, dan ```{{ class }}```** pada template sesuai dengan posisi yang diinginkan untuk menampilkan value dari variabel yang telah didefinisikan dalam dictionary ```context```.
 
-#### f. Membuat sebuah routing pada urls.py aplikasi main untuk memetakan fungsi yang telah dibuat pada views.py
-Setelah berhasil melakukan set up pada aplikasi ```main```, saya mengonfigurasi routing URL pada proyek ```librory```. Jika berkas ```urls.py``` pada aplikasi ```main``` ditujukan untuk mengatur rute URL pada aplikasi ```main```, maka berkas ```urls.py``` pada proyek ```librory``` ditujukan untuk mengatur rute URL pada tingkat proyek. Pada direktori ```librory```, telah terdapat berkas ```urls.py``` sehingga saya tidak perlu membuat berkas tersebut kembali. Pada berkas tersebut, saya **meng-import fungsi ```include```** untuk mengimpor rute URL dari aplikasi ```main``` **ke dalam berkas ```urls.py``` proyek ```librory```**. Saya juga **menambahkan ```path('main/', include('main.urls'))```** pada list urlpatterns agar path url ```main/``` akan diarahkan ke rute yang didefinisikan dalam berkas ```urls.py``` pada aplikasi ```main```.
+#### 2.6 Membuat sebuah routing pada ```urls.py``` aplikasi main untuk memetakan fungsi yang telah dibuat pada ```views.py```
+Setelah berhasil melakukan set up pada aplikasi ```main```, saya mengonfigurasi routing URL pada proyek ```librory```. Jika berkas ```urls.py``` pada aplikasi ```main``` ditujukan untuk mengatur rute URL pada aplikasi ```main```, maka berkas ```urls.py``` pada proyek ```librory``` ditujukan untuk mengatur rute URL pada tingkat proyek. Pada direktori ```librory```, telah terdapat berkas ```urls.py``` sehingga saya tidak perlu membuat berkas tersebut kembali. Pada berkas tersebut, saya **mengimport fungsi ```include```** untuk mengimpor rute URL dari aplikasi ```main``` **ke dalam berkas ```urls.py``` proyek ```librory```**. Saya juga **menambahkan ```path('main/', include('main.urls'))```** pada list urlpatterns agar path url ```main/``` akan diarahkan ke rute yang didefinisikan dalam berkas ```urls.py``` pada aplikasi ```main```.
 
-#### g. Melakukan deployment ke Adaptable terhadap aplikasi yang sudah dibuat
+#### 2.7 Melakukan deployment ke Adaptable terhadap aplikasi yang sudah dibuat
 Untuk melakukan deployment ke Adaptable, saya terlebih dahulu **melakukan add, push, dan commit perubahan pada direktori kepada repositori**. Hal ini dilakukan karena deployment akan dihubungkan dengan akun GitHub serta repositori yang berkaitan. Setelah selesai menambahkan perubahan pada repositori, saya **membuat akun Adaptable.io** menggunakan akun GitHub dan **menekan tombol ```New App```**. Saya **memilih opsi ```Connect an Existing Repository```** dan **memilih repositori ```librory```** karena saya ingin men-deploy aplikasi tersebut. Saya **memilih branch ```main```** sebagai deployment branch, kemudian saya **memilih ```Python App Template```** sebagai template deployment, serta **```PostgreSQL```** sebagai tipe basis data yang akan digunakan. Setelah itu, saya **memilih versi ```Python 3.10```** sesuai versi Python yang saya install dan **memasukkan perintah ```python manage.py migrate && gunicorn librory.wsgi```** pada bagian Start Command. Setelah itu, saya **memasukkan ```librory``` sebagai nama aplikasi**, **mencentang bagian ```HTTP Listener on PORT```**, dan men-deploy aplikasi dengan **menekan tombol ```Deploy App```**. Apabila terdapat perubahan/pembaruan pada repositori, saya akan menekan tombol dengan tiga titik dan me-redeploy aplikasi.
 
 ### Tugas 3
-#### h. Membuat input form untuk menambahkan objek model pada app sebelumnya.
+#### 3.1 Membuat input ```form``` untuk menambahkan objek model pada app sebelumnya
 Sebelum saya membuat form registrasi, saya **membuat skeleton** sebagai kerangka views dari aplikasi saya agar desain lebih konsisten dan redundansi kode dapat diminimalisir. Saya membuat skeleton dengan **membuat folder ```templates``` pada root folder** dan **menambahkan berkas ```base.html```** pada folder tersebut. Berkas ```base.html``` akan digunakan sebagai kerangka umum untuk halaman aplikasi lainnya dalam proyek.
 
 Setelah itu, agar skeleton dapat terdeteksi sebagai berkas template dan digunakan kerangka umum, saya menambahkan kode **```'DIRS': [BASE_DIR / 'templates']``` ke dalam variabel ```TEMPLATES```** di dalam berkas ```settings.py``` pada subdirektori ```librory```. Saya juga mengganti kode pada berkas ```main.html``` pada subdirektori ```templates``` yang ada pada direktori ```main``` dengan menggunakan ```main.html``` sebagai template utama.
@@ -112,7 +112,7 @@ Kemudian saya **membuat berkas ```create_item.html```** pada direktori ```main/t
 - ```<input type="submit" value="Add Item"/>``` digunakan sebagai tombol submit untuk mengirimkan request ke view ```create_item(request)``
 
 
-#### i. Tambahkan 5 fungsi views untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID
+#### 3.2 Tambahkan 5 fungsi views untuk melihat objek yang sudah ditambahkan dalam format ```HTML```, ```XML```, ```JSON```, ```XML by ID```, dan ```JSON by ID```
 Pertama-tama, saya membuka berkas ```views.py``` pada folder ```main``` dan **mengimport ```HttpResponse```** untuk menginformasikan ```client``` dan ```Serializer``` untuk mengubah objek ke dalam suatu format yang memudahkan transmisi data dalam jaringan atau penyimpanan dalam database. Untuk mengimport keduanya, saya menambahkan kode sebagai berikut:
 ```
 from django.http import HttpResponse
@@ -201,7 +201,7 @@ def show_json_by_id(request, id):
 - ```data = Item.objects.filter(pk=id)``` digunakan untuk menyimpan hasil query dari data yang ada pada Item sesuai dengan id
 - ```return HttpResponse(serializers.serialize("json", data), content_type="application/json")``` digunakan untuk mereturn ```HttpResponse``` berisi parameter data hasil query yang diserialisasi oleh ```serializers``` menjadi JSON
 
-#### j. Membuat routing URL untuk masing-masing views yang telah ditambahkan
+#### 3.3 Membuat ```routing URL``` untuk masing-masing views yang telah ditambahkan
 Setelah selesai membuat seluruh fungsi yang dibutuhkan, saya membuka berkas ```urls.py``` pada folder ```main``` dan **mengimport seluruh fungsi yang telah dibuat** sebelumnya. Saya mengimport seluruh fungsi dengan kode sebagai berikut:
 ```
 from main.views import show_main, create_item, show_xml, show_json, show_xml_by_id, show_json_by_id
@@ -217,6 +217,91 @@ urlpatterns = [
     path('json/<int:id>/', show_json_by_id, name='show_json_by_id')
 ]
 ```
+### Tugas 4
+#### 4.1 Mengimplementasikan fungsi ```registrasi```, ```login```, dan ```logout``` untuk memungkinkan pengguna untuk mengakses aplikasi sebelumnya dengan lancar
+Sebelum mengimplementasikan fungsi ```registrasi```, ```login```, dan ```logout```, saya mengimport beberapa modul yang dibutuhkan sebagai berikut pada berkas ```view.py``` pada subdirektori ```main```:
+```
+from django.shortcuts import redirect 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages  
+```
+- ```login_required``` digunakan untuk mengharuskan pengguna masuk/login sebelum dapat mengakses aplikasi
+- ```UserCreationForm``` adalah formulir bawaan yang akan digunakan sebagai template pembuatan formulir pendaftaran pengguna dalam aplikasi
+- ```authenticate``` adalah fungsi yang akan digunakan untuk melakukan autentikasi pengguna dalam aplikasi
+- ```login``` adalah fungsi yang akan digunakan untuk melakukan login jika autentikasi pengguna dalam aplikasi berhasil
+- ```logout``` adalah fungsi yang akan digunakan untuk melakukan logout
+
+Setelah mengimport seluruh modul yang dibutuhkan, saya membuat fungsi ```register``` pada berkas ```view.py``` pada subdirektori ```main``` untuk menghasilkan formulir registrasi secara otomatis. Fungsi ini juga akan menghasilkan akun pengguna ketika form disubmit. Isi dari fungsi tersebut adalah 
+
+#### 4.2 Membuat dua akun pengguna dengan masing-masing tiga dummy data menggunakan model yang telah dibuat pada aplikasi sebelumnya untuk setiap akun di lokal
+Saya menekan text "Register Now" dan mengisi fields username, password, dan password confirmation. Setelah selesai mengisi seluruh fields, saya menekan tombol daftar untuk mendaftarkan akun. Setelah berhasil membuat akun, saya kembali ke halaman login dan mengisi fields username dan password sesuai dengan akun yang telah saya buat sebelumnya.
+Untuk menambahkah data dummy, saya menekan tombol add new item dan mengisi fields name, amount, rented, category, dan description. Setelah selesai mengisi seluruh fields, saya menekan tombol add item dan item yang telah ditambahkan akan muncul pada tabel di main page. 
+
+#### 4.3 Menghubungkan model ```Item``` dengan ```User```
+Untuk menghubungkan model ```Item``` dengan ```User```, saya membuka ```models.py``` yang ada pada subdirektori ```main``` dan mengimport User dengan potongan kode sebagai berikut:
+```
+from django.contrib.auth.models import User
+```
+Setelah itu, pada model ```Item```, saya menambahkan atribut ```user``` dengan potongan kode sebagai berikut:
+```
+user = models.ForeignKey(User, on_delete=models.CASCADE)
+```
+Potongan kode tersebut berfungsi untuk menghubungkan satu produk dengan satu user melalui sebuah relationship sehingga suatu produk pasti terasosiasikan dengan seorang user.
+Setelah itu, saya membuka berkas ```views.py``` pada subdirektori ```main``` dan mengubah potongan kode pada fungsi ```create_item``` menjadi sebagai berikut:
+```
+if form.is_valid() and request.method == "POST":
+     item = form.save(commit=False)
+     item.user = request.user
+     item.save()
+     return HttpResponseRedirect(reverse('main:show_main'))
+```
+- ```item = form.save(commit=False)``` digunakan untuk mencegah Django agar tidak langsung menyimpan objek yang telah dibuat dari form ke database dan memungkinkan pengguna untuk memodifikasi objek sebelum disimpan ke database.
+- ```item.user = request.user``` digunakan untuk mengisi field ```user``` dengan objek ```User``` yang sedang terotorisasi untuk menandakan bahwa objek tersebut dimiliki oleh pengguna yang sedang login.
+Setelah itu, saya mengubah fungsi ```show_main``` menjadi sebagai berikut:
+```
+items = Item.objects.filter(user=request.user)
+```
+dan mengubah value dari key ```name``` pada dictionary ```context``` menjadi ```request.user.username```.
+- ```items = Item.objects.filter(user=request.user)``` digunakan untuk menampikan objek ```Item``` yang terasosiasi dengan pengguna yang sedang login. 
+- ```request.user.username``` digunakan untuk menampilkan username pengguna yang sedang login pada halaman main.
+Setelah itu saya melakukan migrasi dengan menjalankan perintah ```python manage.py makemigrations```, saya memilih pilihan 1 untuk menetapkan default value untuk field user pada semua row yang telah dibuat pada basis data dan memilih pilihan 1 lagi untuk menetapkan user dengan ID 1 pada model yang sudah ada. Setelah itu saya melakukan migrasi dengan menjalankan perintah ```python manage.py migrate```.
+
+#### 4.4 Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan ```cookies``` seperti ```last login``` pada halaman utama aplikasi
+Untuk menampilkan detail informasi pengguna yang sedang logged in dan menerapkan cookies pada halaman utama aplikasi, saya membuka berkas ```views.py``` pada subdirektori ```main``` dan meng-import beberapa modul sebagai berikut:
+```
+import datetime
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+```
+- ```import datetime``` digunakan untuk mengimport datetime yang kemudian akan digunakan untuk menyimpan waktu saat user log in.
+- ```from django.http import HttpResponseRedirect``` digunakan untuk mengimport HttpResponseRedirect yang kemudian akan digunakan untuk redirect user ke halaman yang ditujukan.
+- ```from django.urls import reverse``` digunakan untuk mengimport reverse yang kemudian akan digunakan untuk mengakses URL secara backward.
+Setelah itu, pada fungsi ```login_user```, saya mengganti kode pada fungsi ```login_user``` menjadi sebagai berikut:
+```
+if user is not None:
+    login(request, user)
+    response = HttpResponseRedirect(reverse("main:show_main")) 
+    response.set_cookie('last_login', str(datetime.datetime.now()))
+    return response
+```
+- ```login(request, user)``` digunakan untuk mengarahkan user untuk login terlebih dahulu.
+- ```response = HttpResponseRedirect(reverse("main:show_main"))``` digunakan untuk membuat response.
+- ```response.set_cookie('last_login', str(datetime.datetime.now()))``` digunakan untuk membuat cookie ```last_login``` dan menambahkannya ke dalam response.
+Setelah itu, pada fungsi ```show_main```, saya menambahkan key ```last_login``` dengan value ```request.COOKIES['last_login']``` ke dalam dictionary ```context``` untuk menambahkan informasi cookie ```last_login``` pada response yang akan ditampilkan di halaman web.
+Setelah itu syaa mengubah fungsi ```logout_user``` menjadi sebagai beikut:
+```
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('main:login'))
+    response.delete_cookie('last_login')
+    return response
+```
+- ```logout(request)``` digunakan untuk meng-logout user.
+- ```response = HttpResponseRedirect(reverse('main:login'))``` digunakan untuk membuat response.
+- ```response.delete_cookie('last_login')``` digunakan untuk menghapus cookie ```last_login``` saat pengguna logout.
+Sebagai langkah terakhir, saya membuka berkas ```main.html``` dan menambahkan potongan kode ```<h5>Sesi terakhir login: {{ last_login }}</h5>``` untuk menampilkan cookie ```last_login``` pada halaman utama.
 
 ## 2. Bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan kaitan antara urls.py, views.py, models.py, dan berkas HTML
 
@@ -301,3 +386,39 @@ JSON sering digunakan dalam pertukaran data antara aplikasi web modern karena JS
 ### 5. path('json/<int:id>/', show_json_by_id, name='show_json_by_id'): http://localhost:8000/json/1
 ![Screenshot 2023-09-18 003636](https://github.com/eelizabethmichelle/librory/assets/124945174/d2d18d68-7eeb-4a6c-8a76-3fcb63358aa6)
 ![Screenshot 2023-09-18 003649](https://github.com/eelizabethmichelle/librory/assets/124945174/27fdfdc0-2951-4bd3-a391-2e62648eaf70)
+
+## 9. Kelebihan dan kekurangan Django ```UserCreationForm```
+UserCreationForm adalah impor formulir bawaan yang memudahkan pembuatan formulir pendaftaran pengguna dalam aplikasi web. Dengan formulir ini, pengguna baru dapat mendaftar dengan mudah di situs web tanpa harus menulis kode dari awal.
+#### Kelebihan UserCreationForm
+1. Cepat dan mudah digunakan karena tidak perlu menuliskan kode dari awal.
+2. Dapat memvalidasi untuk memastikan bahwa input yang dimasukkan oleh pengguna sesuai dengan persyaratan dasar seperti panjang kata sandi yang cukup dan alamat email yang valid.
+3. Terintegrasi dengan model User yang ada di Django sehingga data pengguna baru dapat dengan mudah disimpan ke dalam database.
+4. Dapat disesuaikan sesuai dengan kebutuhan dengan menambahkan bidang tambahan atau mengubah pesan kesalahan yang ditampilkan kepada pengguna.
+#### Kekurangan UserCreationForm
+1. Memiliki tampilan bawaan yang sederhana.
+2. Tidak cocok untuk kasus khusus yang kompleks.
+3. Tidak mendukung fitur tambahan seperti autentikasi melalui media sosial.
+4. Tergantung pada Django sehingga terdapat limitasi saat diintegrasikan dengan kerangka kerja lain.
+
+## 10. Perbedaan antara autentikasi dan otorisasi dalam konteks Django
+#### Autentikasi
+Autentikasi adalah proses untuk memverifikasi identitas pengguna dengan tujuan untuk memastikan bahwa pengguna yang mengakses aplikasi adalah pengguna yang sesungguhnya. Proses ini biasa dilakukan dengan memverifikasi kredentials dan identitas entitas. Autentikasi berfokus pada pemeriksaan apakah pengguna memiliki kredensial yang benar untuk mengakses sistem.
+#### Autorisasi
+Autorisasi adalah proses untuk mengatur dan mengendalikan izin akses pengguna terhadap sumber daya atau aksi tertentu dalam aplikasi dengan tujuan untuk mengatur apa yang dapat dan tidak dapat diakses oleh pengguna yang telah diautentikasi. Autorisasi berfokus pada pengaturan hak akses dan aturan yang mengendalikan apa yang pengguna boleh dan tidak boleh lakukan dalam aplikasi.
+
+## 11. Pengertian cookies dan bagaimana Django menggunakan cookies untuk mengelola data sesi pengguna
+Cookies adalah informasi sederhana yang dapat digunakan web untuk mengidentifikasi pengguna dalam sesi web yang disimpan di sisi klien oleh server web. 
+Django menggunakan cookies untuk mengelola data sesi pengguna dan menyimpan informasi sederhana yang dapat digunakan oleh server untuk mengidentifikasi pengguna atau mengingat preferensi pengguna. 
+
+## 12. Keamanan penggunaaan cookies secara default dalam pengembangan web dan risiko potensial yang harus diwaspadai
+Penggunaan cookies secara default dalam pengembangan web memiliki beberapa implikasi keamanan yang perlu diperhatikan, yaitu:
+1. Pencurian informasi pribadi
+Cookies yang tidak dienkripsi dengan baik dapat menyebabkan terjadinya pelanggaran keamanan seperti pencurian nama pengguna, alamat email, atau token otentikasi.
+2. CSRF (Cross-Site Request Forgery)
+Cookies yang digunakan untuk autentikasi dapat menjadi sasaran serangan CSRF sehingga aksi atau perubahan yang unauthorized dapat dilakukan dengan mengatasnamakan pengguana.
+3. XSS (Cross-Site Scriptiing)
+Serangan ini dapat dilakukan dengan penyisipan skrip berbahaya dalam cookies sehingga ketika cookies dieksekusi oleh browser pengguna, serangan XSS dapat terjadi.
+4. User tracking
+Cookies sering digunakan oleh perusahaan untuk melacak aktivitas pengguna secara online sehingga hal ini dapat melanggar privasi pengguna.
+5. Penggunaan cookies yang berlebihan dan tidak aman
+Penggunaan cookies yang terlalu banyak dalam satu aplikasi web dapat menghambat kinerja dan menjadi target penyerangan seperti peretasan sesi atau pencurian cookies apabila cookies tidak diatur dengan benar atau memiliki atribut yang tidak aman.
