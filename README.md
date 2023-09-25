@@ -259,6 +259,7 @@ if form.is_valid() and request.method == "POST":
 ```
 - ```item = form.save(commit=False)``` digunakan untuk mencegah Django agar tidak langsung menyimpan objek yang telah dibuat dari form ke database dan memungkinkan pengguna untuk memodifikasi objek sebelum disimpan ke database.
 - ```item.user = request.user``` digunakan untuk mengisi field ```user``` dengan objek ```User``` yang sedang terotorisasi untuk menandakan bahwa objek tersebut dimiliki oleh pengguna yang sedang login.
+
 Setelah itu, saya mengubah fungsi ```show_main``` menjadi sebagai berikut:
 ```
 items = Item.objects.filter(user=request.user)
@@ -266,6 +267,7 @@ items = Item.objects.filter(user=request.user)
 dan mengubah value dari key ```name``` pada dictionary ```context``` menjadi ```request.user.username```.
 - ```items = Item.objects.filter(user=request.user)``` digunakan untuk menampikan objek ```Item``` yang terasosiasi dengan pengguna yang sedang login. 
 - ```request.user.username``` digunakan untuk menampilkan username pengguna yang sedang login pada halaman main.
+
 Setelah itu saya melakukan migrasi dengan menjalankan perintah ```python manage.py makemigrations```, saya memilih pilihan 1 untuk menetapkan default value untuk field user pada semua row yang telah dibuat pada basis data dan memilih pilihan 1 lagi untuk menetapkan user dengan ID 1 pada model yang sudah ada. Setelah itu saya melakukan migrasi dengan menjalankan perintah ```python manage.py migrate```.
 
 #### 4.4 Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan ```cookies``` seperti ```last login``` pada halaman utama aplikasi
@@ -278,6 +280,7 @@ from django.urls import reverse
 - ```import datetime``` digunakan untuk mengimport datetime yang kemudian akan digunakan untuk menyimpan waktu saat user log in.
 - ```from django.http import HttpResponseRedirect``` digunakan untuk mengimport HttpResponseRedirect yang kemudian akan digunakan untuk redirect user ke halaman yang ditujukan.
 - ```from django.urls import reverse``` digunakan untuk mengimport reverse yang kemudian akan digunakan untuk mengakses URL secara backward.
+
 Setelah itu, pada fungsi ```login_user```, saya mengganti kode pada fungsi ```login_user``` menjadi sebagai berikut:
 ```
 if user is not None:
@@ -289,8 +292,8 @@ if user is not None:
 - ```login(request, user)``` digunakan untuk mengarahkan user untuk login terlebih dahulu.
 - ```response = HttpResponseRedirect(reverse("main:show_main"))``` digunakan untuk membuat response.
 - ```response.set_cookie('last_login', str(datetime.datetime.now()))``` digunakan untuk membuat cookie ```last_login``` dan menambahkannya ke dalam response.
-Setelah itu, pada fungsi ```show_main```, saya menambahkan key ```last_login``` dengan value ```request.COOKIES['last_login']``` ke dalam dictionary ```context``` untuk menambahkan informasi cookie ```last_login``` pada response yang akan ditampilkan di halaman web.
-Setelah itu syaa mengubah fungsi ```logout_user``` menjadi sebagai beikut:
+
+Setelah itu, pada fungsi ```show_main```, saya menambahkan key ```last_login``` dengan value ```request.COOKIES['last_login']``` ke dalam dictionary ```context``` untuk menambahkan informasi cookie ```last_login``` pada response yang akan ditampilkan di halaman web. Setelah itu saya mengubah fungsi ```logout_user``` menjadi sebagai beikut:
 ```
 def logout_user(request):
     logout(request)
@@ -301,6 +304,7 @@ def logout_user(request):
 - ```logout(request)``` digunakan untuk meng-logout user.
 - ```response = HttpResponseRedirect(reverse('main:login'))``` digunakan untuk membuat response.
 - ```response.delete_cookie('last_login')``` digunakan untuk menghapus cookie ```last_login``` saat pengguna logout.
+
 Sebagai langkah terakhir, saya membuka berkas ```main.html``` dan menambahkan potongan kode ```<h5>Sesi terakhir login: {{ last_login }}</h5>``` untuk menampilkan cookie ```last_login``` pada halaman utama.
 
 ## 2. Bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan kaitan antara urls.py, views.py, models.py, dan berkas HTML
