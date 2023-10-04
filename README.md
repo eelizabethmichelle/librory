@@ -307,6 +307,309 @@ def logout_user(request):
 
 Sebagai langkah terakhir, saya membuka berkas ```main.html``` dan menambahkan potongan kode ```<h5>Sesi terakhir login: {{ last_login }}</h5>``` untuk menampilkan cookie ```last_login``` pada halaman utama.
 
+### Tugas 5
+#### 5.1 Kustomisasi halaman login, register, dan tambah inventori semenarik mungkin
+##### Kustomisasi halaman login
+Untuk menambahkan kustomisasi halaman login, saya menambahkan kode sebagai berikut pada block content:
+```
+<style>
+button {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+  
+button:hover {
+    opacity: 0.8;
+}
+  
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+}
+  
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+  
+.img.avatar {
+    width: 40%;
+    border-radius: 50%;
+}
+  
+.container {
+    padding: 16px;
+}
+  
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+  
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+}
+</style>
+```
+
+##### Kustomisasi halaman register
+Untuk menambah kustomisasi halaman register, saya menambahkan kode sebagai berikut pada block content:
+```
+<style>
+  
+    button {
+        background-color: #04AA6D;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+      
+    button:hover {
+        opacity: 0.8;
+    }
+      
+    .cancelbtn {
+        width: auto;
+        padding: 10px 18px;
+        background-color: #f44336;
+    }
+      
+    .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+    }
+      
+    .img.avatar {
+        width: 40%;
+        border-radius: 50%;
+    }
+      
+    .container {
+        padding: 16px;
+    }
+      
+    span.psw {
+        float: right;
+        padding-top: 16px;
+    }
+      
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+        span.psw {
+           display: block;
+           float: none;
+        }
+        .cancelbtn {
+           width: 100%;
+        }
+    }
+    </style>
+```
+
+##### Kustomisasi halaman utama
+Untuk menambah kustomisasi halaman utama, saya menambahkan kode sebagai berikut pada block content:
+```
+    <style>
+    .center-element {
+        text-align: center;
+    }
+
+    h1 {
+        font-size: calc(1.375rem + 1.5vw);
+        color:white;
+    }
+
+    h6 {
+        font-size: 1rem;
+        color: white;
+    }
+    
+    p {
+        font-size: 13px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1rem;
+    }
+    
+    table, th, td {
+        border: 1px solid var(--bs-border-color);
+        text-align: center;
+    }
+
+    th, td {
+        padding: 0.5rem; 
+    }
+
+    button {
+        border-radius: 15px;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    body {
+        font: 20px Montserrat, sans-serif;
+        line-height: 1.8;
+        color: #f5f6f7;
+    }
+
+    .margin {
+        margin-bottom: 45px;
+        margin-left: 45px;
+        margin-right: 45px;
+    }
+
+    .bg-1 { 
+        background-color: #1abc9c; /* Green */
+        color: #ffffff;
+    }
+
+    .bg-2 { 
+        background-color: #474e5d; /* Dark Blue */
+        color: #ffffff;
+    }
+
+    .bg-3 { 
+        background-color: #ffffff; /* White */
+        color: #555555;
+    }
+
+    .bg-4 { 
+        background-color: #2f2f2f; /* Black Gray */
+        color: #fff;
+    }
+
+    .container-fluid {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    .navbar {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border: 0;
+        border-radius: 0;
+        margin-bottom: 0;
+        font-size: 12px;
+        letter-spacing: 5px;
+    }
+    
+    .navbar-nav  li a:hover {
+        color: #1abc9c !important;
+        font-size: small;
+    }
+    </style>
+
+    <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">{{ name }}</a>
+          </div>
+            <div class="nav navbar-nav navbar-right">
+                <a href="{% url 'main:logout' %}">
+                    <button class="btn btn-outline-success" type="button">Logout</button>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <body>
+        <div class="container-fluid bg-1 text-center">
+            <h1>Librory</h1>
+            <p>Unveiling the World's Tales at Your Fingertips</p>
+        </div>
+
+        <div class="container-fluid bg-2 text-center">
+            <h4 class="margin">What Is Librory</h4>
+            <p class="margin">Introducing Librory, your gateway to a world of books. Explore our vast collection, check the availability of each title, and stay informed about the number of copies in circulation. With real-time information at your fingertips, you'll have all you need to embark on your reading journey. Discover, enjoy, and immerse yourself in the magic of literature through our app.</p>
+        </div>
+
+        <div class="container-fluid bg-3 text-center">    
+            <h3 class="margin">Find Your Favorite Book</h3><br>
+            <div class="center-element">
+                <div class="row">
+                    {% for item in items %}
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="card mx-auto p-3" style="width: 18rem;">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ item.name }}</h4>
+                                <p class="card-text">{{ item.category }}</p>
+                                <p class="card-text">Amount: {{ item.amount }}</p>
+                                <p class="card-text">Rented: {{ item.rented }}</p>
+                                <p class="card-text">{{ item.description }}</p>
+                                <a href="{% url 'main:edit_item' item.pk %}" class="btn btn-primary">Edit</a>
+                                <a href="{% url 'main:delete_item' item.pk %}" class="btn btn-primary">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <p></p>
+                <a href="{% url 'main:create_item' %}">
+                    <button class="btn btn-outline-success" type="button">Add Item</button>
+                </a>
+            </div>
+        </div>
+
+        <footer class="container-fluid bg-4 text-center">
+            <p>Last login: {{ last_login }}</p> 
+        </footer>
+
+    </body>
+```
+
+#### 5.2 Kustomisasi halaman daftar inventori menjadi lebih berwarna maupun menggunakan apporach lain seperti menggunakan Card
+Untuk menggunakan Card, saya menambahkan kdoe sebagai berikut:
+```
+<div class="container-fluid bg-3 text-center">    
+    <h3 class="margin">Find Your Favorite Book</h3><br>
+    <div class="center-element">
+        <div class="row">
+            {% for item in items %}
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="card mx-auto p-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ item.name }}</h4>
+                        <p class="card-text">{{ item.category }}</p>
+                        <p class="card-text">Amount: {{ item.amount }}</p>
+                        <p class="card-text">Rented: {{ item.rented }}</p>
+                        <p class="card-text">{{ item.description }}</p>
+                        <a href="{% url 'main:edit_item' item.pk %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'main:delete_item' item.pk %}" class="btn btn-primary">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <p></p>
+        <a href="{% url 'main:create_item' %}">
+            <button class="btn btn-outline-success" type="button">Add Item</button>
+        </a>
+    </div>
+</div>
+```
+
 ## 2. Bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan kaitan antara urls.py, views.py, models.py, dan berkas HTML
 
  ```
@@ -426,3 +729,64 @@ Serangan ini dapat dilakukan dengan penyisipan skrip berbahaya dalam cookies seh
 Cookies sering digunakan oleh perusahaan untuk melacak aktivitas pengguna secara online sehingga hal ini dapat melanggar privasi pengguna.
 5. Penggunaan cookies yang berlebihan dan tidak aman
 Penggunaan cookies yang terlalu banyak dalam satu aplikasi web dapat menghambat kinerja dan menjadi target penyerangan seperti peretasan sesi atau pencurian cookies apabila cookies tidak diatur dengan benar atau memiliki atribut yang tidak aman.
+
+## 13. Manfaat dari setiap element selector dan waktu yang tepat untuk menggunakannya
+#### Type Selector
+Type selector dapat memilih smeua elemen dengan tipe tertentu. Selektor ini lebih baik digunakan ketika pengubahan gaya untuk semua elemen dengan tipe yang sama harus dilakukan.
+#### Class Selector
+Class selector dapat memilih elemen berdasarkan kelas yang diberikan. Selector ini lebih baik digunakan ketika pengaplikasian gaya tertentu atas kelas tertentu harus dilakukan. 
+#### ID Selector
+ID selector dapat memilih elemen berdasarkan ID yang diberikan. Selector ini lebih baik digunakan ketika pengidentifikasian atas elemen tertentu harus dilakukan. 
+#### Universal Selector
+Universal selector dapat memilih semua elemen di halaman HTML. Selector ini lebih baik digunakan ketika dibutuhkan pengubahan gaya untuk semua elemen pada halaman HTML.
+#### Pseudo-class Selector
+Pseudo-class selector dapat memilih elemen berdasarkan keadaan atau interaksi pengguna seperti ':hover' atau ':active'. Selector ini lebih baik digunakan ketika pmberian gaya tambahan saat elemen dalam keadaan tertentu perlu dilakukan.
+
+## 14. HTML5 Tag
+- ```<html>```: elemenn root dari setiap halaman web HTML5
+- ```<head```: berisi informasi tentang dokumen terkait, seperti jduul halaman, metadata, dan tautan ke file eksternal
+- ```<body>```: mengandung semua konten yang akan ditampilkan
+- ```<meta>```: untuk menyertakan metadata dalam halaman web, seperti karakter set yang digunakan dan deskripsi halaman
+- ```<title>```: untuk menentukan judul halaman yang akan ditampilkan di tab browser
+- ```<link>```: untuk menghubungkan halaman web dengan file eksternal, seperti file CSS
+- ```<style>```: untuk menuliskan CSS inline yang akan ditampilkan pada halaman
+- ```<script>```: untuk menyertakan script JavaScript pada halaman
+- ```<header>```: untuk mengelompokkan elemen-elemen yang merupakan kepala dari halaman
+- ```<footer>``` untuk mengelompokkan elemen-elemen yang merupakan informasi penutupan halaman
+- ```nav```: untuk mengelompokkan tautan navigasi atau menu
+- ````<main>``: untuk mengidentifikasi konten utama halaman
+- ```<section>```: untuk mengelompokkan konten yang memiliki topik tetentu dalam halaman
+- ```<form>```: untuk membuat formulir interaktif yang memungkinkan pengguna untuk mengirimkan data
+- 
+## 15. Perbedaan antara margin dan padding
+#### Margin
+- Margin menandakan ruang di sekitar elemen HTML di luar batas elemen itu sendiri
+- Digunakan untuk mengatur jarak antara elemen dengan elemen lain di sekitarnya atau dengan elemen lain dalam kontainer yang lebih besar
+- Hanya mendefinisikan ruang antara elemen dengan elemen lainnya dan tidak memiliki warna atau latar belakang
+- Dapat memiliki nilai positif maupun negatif
+
+#### Padding
+- Padding menandakan ruang di sekitar elemen HTML di dalam batas elemen itu sendiri
+- Digunakan untuk mengatur jarak antara konten elemen dan batas elemennya
+- Memiliki warna atau latar belakang
+
+## 16. Perbedaan antara framework CSS Tailwind dan Bootstrap. dan waktu terbaik dalam penggunaan keduanya
+#### CSS Tailwind
+- Utility-first approach. Menggabungkan kelas CSS ke dalam elemen HTML
+- Flexible configuration. Tailwind dapat dikonfigurasi untuk emnghasilkan elas-kelas yang sesuai dengan kebutuhan halaman
+- Memiliki ukuran yang lebih kecil daripada bootstrap
+
+#### Bootstrap
+- Component-based approach. Didasarkan pada komponen-komponen siap pakai
+- Consistent design. Bootstrap dapat diimplementasikan untuk menghasilkan tampilan yang konsisten di seluruh halaman
+- Memiliki dokumentasi yang sangat baik
+
+#### CSS Tailwind > Bootstrap
+- Membutuhkan tingkat kustomisasi yang tinggi
+- Meminimalisir penggunaan memori
+- Menghindari konflik kelas CSS pada proyek yang lebih besar
+
+#### Bootstrap > CSS Tailwind
+- Membangun halaman dengan cepat tanpa banyak kustomisasi
+- Membutuhkan konsistensi desain yang itnggi
+- Mengutamakan dokumentasi yang kuat

@@ -1,49 +1,158 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-    <h1>Librory Page</h1>
+    <style>
 
-    <h5>Name:</h5>
-    <p>{{name}}</p>
+    .center-element {
+        text-align: center;
+    }
 
-    <h5>Class:</h5>
-    <p>{{class}}</p>
+    h1 {
+        font-size: calc(1.375rem + 1.5vw);
+        color:white;
+    }
 
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Rented</th>
-            <th>Category</th>
-            <th>Description</th>
-        </tr>
+    h6 {
+        font-size: 1rem;
+        color: white;
+    }
+    
+    p {
+        font-size: 13px;
+    }
 
-        {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1rem;
+    }
+    
+    table, th, td {
+        border: 1px solid var(--bs-border-color);
+        text-align: center;
+    }
 
-        {% for item in items %}
-            <tr>
-                <td>{{item.name}}</td>
-                <td>{{item.amount}}</td>
-                <td>{{item.rented}}</td>
-                <td>{{item.category}}</td>
-                <td>{{item.description}}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    th, td {
+        padding: 0.5rem; 
+    }
 
-    <br />
+    button {
+        border-radius: 15px;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
 
-    <a href="{% url 'main:create_item' %}">
-        <button>
-            Add New Item
-        </button>
-    </a>
+    body {
+        font: 20px Montserrat, sans-serif;
+        line-height: 1.8;
+        color: #f5f6f7;
+    }
 
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
+    .margin {
+        margin-bottom: 45px;
+        margin-left: 45px;
+        margin-right: 45px;
+    }
 
-    <a href="{% url 'main:logout' %}">
-        <button>
-            Logout
-        </button>
-    </a>
+    .bg-1 { 
+        background-color: #1abc9c; /* Green */
+        color: #ffffff;
+    }
+
+    .bg-2 { 
+        background-color: #474e5d; /* Dark Blue */
+        color: #ffffff;
+    }
+
+    .bg-3 { 
+        background-color: #ffffff; /* White */
+        color: #555555;
+    }
+
+    .bg-4 { 
+        background-color: #2f2f2f; /* Black Gray */
+        color: #fff;
+    }
+
+    .container-fluid {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    .navbar {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border: 0;
+        border-radius: 0;
+        margin-bottom: 0;
+        font-size: 12px;
+        letter-spacing: 5px;
+    }
+    
+    .navbar-nav  li a:hover {
+        color: #1abc9c !important;
+        font-size: small;
+    }
+
+    </style>
+    <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">{{ name }}</a>
+          </div>
+            <div class="nav navbar-nav navbar-right">
+                <a href="{% url 'main:logout' %}">
+                    <button class="btn btn-outline-success" type="button">Logout</button>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <body>
+        <div class="container-fluid bg-1 text-center">
+            <h1>Librory</h1>
+            <p>Unveiling the World's Tales at Your Fingertips</p>
+        </div>
+
+        <div class="container-fluid bg-2 text-center">
+            <h4 class="margin">What Is Librory</h4>
+            <p class="margin">Introducing Librory, your gateway to a world of books. Explore our vast collection, check the availability of each title, and stay informed about the number of copies in circulation. With real-time information at your fingertips, you'll have all you need to embark on your reading journey. Discover, enjoy, and immerse yourself in the magic of literature through our app.</p>
+        </div>
+
+        <div class="container-fluid bg-3 text-center">    
+            <h3 class="margin">Find Your Favorite Book</h3><br>
+            <div class="center-element">
+                <div class="row">
+                    {% for item in items %}
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="card mx-auto p-3" style="width: 18rem;">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ item.name }}</h4>
+                                <p class="card-text">{{ item.category }}</p>
+                                <p class="card-text">Amount: {{ item.amount }}</p>
+                                <p class="card-text">Rented: {{ item.rented }}</p>
+                                <p class="card-text">{{ item.description }}</p>
+                                <a href="{% url 'main:edit_item' item.pk %}" class="btn btn-primary">Edit</a>
+                                <a href="{% url 'main:delete_item' item.pk %}" class="btn btn-primary">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <p></p>
+                <a href="{% url 'main:create_item' %}">
+                    <button class="btn btn-outline-success" type="button">Add Item</button>
+                </a>
+            </div>
+        </div>
+
+        <footer class="container-fluid bg-4 text-center">
+            <p>Last login: {{ last_login }}</p> 
+        </footer>
+
+    </body>
 {% endblock content %}

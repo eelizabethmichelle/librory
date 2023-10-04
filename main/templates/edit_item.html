@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 
-{% block meta %}
-    <title>Register</title>
-{% endblock meta %}
+{% load static %}
 
-{% block content %} 
+{% block content %}
+
 <style>
-  
     button {
         background-color: #04AA6D;
         color: white;
@@ -56,31 +54,23 @@
            width: 100%;
         }
     }
-    </style>
+</style>
 
-<div class = "login" style="color: black;">
-    
-    <h1>Register</h1>  
+<div style="color: black;">
+<h1>Edit Product</h1>
 
-        <form method="POST" >  
-            {% csrf_token %}  
-            <table>  
-                {{ form.as_table }}  
-                <tr>  
-                    <td></td>
-                    <td><input type="submit" name="submit" value="Daftar"/></td>  
-                </tr>  
-            </table>  
-        </form>
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Edit Item"/>
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
 
-    {% if messages %}  
-        <ul>   
-            {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
-        </ul>   
-    {% endif %}
-
-</div>  
-
-{% endblock content %}
+{% endblock %}
