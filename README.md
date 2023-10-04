@@ -754,10 +754,10 @@ Pseudo-class selector dapat memilih elemen berdasarkan keadaan atau interaksi pe
 - ```<header>```: untuk mengelompokkan elemen-elemen yang merupakan kepala dari halaman
 - ```<footer>``` untuk mengelompokkan elemen-elemen yang merupakan informasi penutupan halaman
 - ```nav```: untuk mengelompokkan tautan navigasi atau menu
-- ````<main>``: untuk mengidentifikasi konten utama halaman
+- ```<main>```: untuk mengidentifikasi konten utama halaman
 - ```<section>```: untuk mengelompokkan konten yang memiliki topik tetentu dalam halaman
 - ```<form>```: untuk membuat formulir interaktif yang memungkinkan pengguna untuk mengirimkan data
-- 
+
 ## 15. Perbedaan antara margin dan padding
 #### Margin
 - Margin menandakan ruang di sekitar elemen HTML di luar batas elemen itu sendiri
