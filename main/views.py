@@ -141,6 +141,8 @@ def decrement_amount(request, id):
     if request.method == 'POST':
         item = Item.objects.get(pk = id)
         if (item.amount > 0):
+            if (item.amount == item.rented):
+                item.rented -= 1
             item.amount -= 1
             item.save()
         return HttpResponse(b"CREATED", status=201)
