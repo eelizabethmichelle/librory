@@ -609,6 +609,105 @@ Untuk menggunakan Card, saya menambahkan kdoe sebagai berikut:
     </div>
 </div>
 ```
+### Tugas 6
+#### 6.2 Mengubah kode _cards_ data item agar dapat mendukung AJAX GET
+Untuk mengubah kode _cards_ data item agar dapat mendukung AJAX GET, saya menambahkan potongan kode sebagai berikut di berkas ```main.html``` pada berkas ```templates``` pada direktori ```main```:
+```
+async function getItems() {
+    return fetch("{% url 'main:get_item_json' %}").then((res) => res.json())
+}
+
+async function refreshItems() {
+    let cardHtml = ''
+    document.getElementById("item_card").innerHTML = cardHtml
+    const items = await getItems();
+
+    items.forEach((item) => {
+        cardHtml += `
+        <div class="card-item">
+            <div class="card mx-auto p-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h4 class="card-title">${item.fields.name}</h4>
+                    <p class="card-text">${item.fields.category}</p>
+                    <p class="card-text">Amount</p>
+                    <p class="card-text">
+                        <div class="btn-container">
+                            <button class="btn decrement-btn" onclick="decrementAmount(${item.pk})">-</button>
+                            <span id="amount-${item.pk}">${item.fields.amount}</span>
+                            <button class="btn increment-btn" onclick="incrementAmount(${item.pk})">+</button>
+                        </div>
+                    </p>
+                    <p class="card-text">Rented</p>
+                    <p class="card-text">
+                        <div class="btn-container">
+                            <button class="btn decrement-btn" onclick="decrementRented(${item.pk})">-</button>
+                            <span id="rented-${item.pk}">${item.fields.rented}</span>
+                            <button class="btn increment-btn" onclick="incrementRented(${item.pk})">+</button>
+                        </div>
+                    </p>
+                    <p class="card-text">${item.fields.description}</p>
+                    <a style="justify-content: baseline;" href='edit-item/${item.pk}' class="btn btn-outline-warning" onclick="editItem(${item.pk})">Edit</a>
+                    <button style="justify-content: baseline;" class="btn btn-outline-danger" onclick="deleteItem(${item.pk})">Delete</button>
+                </div>
+            </div>
+        </div>
+        `;
+    });
+
+    document.getElementById("item_card").innerHTML = `<div class="card-container">${cardHtml}</div>`;
+}
+```
+#### 6.3 Membuat sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan item
+Untuk menambahkan sebuah tombol yang membuka sebuah modal dengan form untuk menambahkan item, saya menambahkan kode sebagai berikut di berkas ```main.html``` pada folder ```templates``` pada direktori ```main```:
+```
+<div class="text-center mt-3">
+    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addItemModal">Add Book</button>
+</div>
+```
+#### 6.4 Membuat fungsi _view_ baru untuk menambahkan item baru ke dalam basis data
+Untuk membuat fungsi _view_ baru untuk menambahkan item baru ke dalam basis data saya menambahkan kode sebagai berikut di berkas ```views.py``` pada direktor ```main```:
+```
+@csrf_exempt
+def create_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        rented = request.POST.get("rented")
+        category = request.POST.get("category")
+        description = request.POST.get("description")
+        user = request.user
+
+        new_item = Item(name=name, amount=amount, rented=rented, category=category, description=description, user=user)
+        new_item.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+```
+#### 6.5 Membuat path ```/create-ajax/``` yang mengarah ke fungsi _view_ yang sudah dibuat di poin 6.4
+Untuk membuat path ```/create-ajax/``` yang mengarah ke fungsi ```create_ajax``` pada poin 6.4, saya menambahkan kode sebagai berikut di berkas ```urls.py``` pada direktori ```main```:
+```
+from main.views import get_item_json, create_ajax
+urlpatterns = [
+    ...
+    path('create-ajax/', create_ajax, name='create_ajax'),
+]
+```
+#### 6.6 Menghubungkan form yang telah dibuat di dalam modal ke path ```/create-ajax/```
+Untuk menghubungkan form yang telah dibuat di dalam modal ke path ```/create_ajax/```, saya menambahkan kode sebagai berikut di berkas ```main.html``` pada folder ```templates``` pada direktori ```main```:
+```
+function addItem() {
+    fetch("{% url 'main:create_ajax' %}", {
+        method: "POST",
+        body: new FormData(document.querySelector('#form'))
+    }).then(refreshItems)
+
+    document.getElementById("form").reset()
+    return false
+}
+```
+#### 6.7 Melakukan perintah collectstatic
+Saya menjelaskan perintah ```python manage.py collectstatic``` pada command prompt.
 
 ## 2. Bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan kaitan antara urls.py, views.py, models.py, dan berkas HTML
 
@@ -790,3 +889,49 @@ Pseudo-class selector dapat memilih elemen berdasarkan keadaan atau interaksi pe
 - Membangun halaman dengan cepat tanpa banyak kustomisasi
 - Membutuhkan konsistensi desain yang itnggi
 - Mengutamakan dokumentasi yang kuat
+
+## 17. Perbedaan antara asynchronous programming dengan synchronous programming
+#### Asynchronous programming
+- Tugas-tugas dapat dieksekusi secara paralel
+- Ketika dijalankan, tugas bersifat non-blocking
+- Memerlukan callback functions
+- Digunakan ketika ada tugas-tugas yang memerlukan waktu lama
+
+#### Synchronous programming
+- Tugas-tugas dieksekusi secara sequential
+- Ketika dijalankan, tugas bersifat blocking
+- Tidak memerlukan konsep callback atau promise 
+- Digunakan ketika ada tugas-tugas yang memerlukan proses berurutan
+
+## 18. Paradigma event-driven programming dan salah satu contoh penerapannya pada tugas ini
+Paradigma event-driven programming adalah pendekatan dalam pemrograman di mana program menjalankan suatu tugas dengan merespon pada peristiwa yang terjadi, seperti button clicks. 
+Contoh penerapakannya pada tugas ini adalah penggunaan button "Add Book" yang apabila diclick maka modal akan dimunculkan. Contoh kode yang digunakan, yaitu ```document.getElementById("button_add").onclick = addItem```.
+
+## 19. Penerapan asynchronous programming pada AJAX.
+1. Menggunakan objek XMLHttpRequest atau Fetch API
+Membuat permintaan HTTP asynchronous menggunakan objek XMLHttpRequest atau Fetch API.
+2. Mengirim permintaan ke server
+Mengirim permintaan HTTP dengan menggunakan metode ```open()``` untuk mengkonfigurasi permintaan dan ```send()``` untuk mengirimnya. Dalam AJAX, permintaan berupa ```GET``` dan ```POST```.
+3. Menggunakan callback untuk menangani respons
+Memproses data yang diterima dan melakukan tindakan yang sesuai. 
+4. Mengatur asynchronous
+Dalam objek XMLHttpRequest permintaan dapat diatur sebagai asynchronous dengan ```xhr.open(method, url, true)``` atau menggunakan ```fetch``` dengan menggunakan ```.then()``` dan ```.catch()``` untuk menangani callback.
+
+## 20. Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada library jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
+#### Fetch API
+1. Kelebihan
+- API mengikuti standar ECMAScript dan menjadi bagian integral dari peramban web utama
+- Fetch API mengembalikan objek Promise sehingga pengkodean asynchronous lebih mudah dibaca
+- Fetch API mendukung berbagai jenis respons data, seperti JSON, XML, HTML, dll
+
+2. Kekurangan
+- Fetch API tidak didukung oleh beberapa peramban web lama. 
+
+#### Library jQuery
+1. Kelebihan
+- jQuery memiliki kompatibilitas yang sangat baik dengan berbagai peramban web, termasuk peramban web lama sehingga cocok untuk proyek dengan basis pengguna yang beragam
+- Sintaks mudah dipahami dan ringan sehingga cepat dipelajari oleh pengembang pemula
+
+2. Kekurangan
+- Dapat menambahkan overhead yang tidak perlu ke proyek-proyek yang sederhana atau kecil
+- Penggunaan callback dapat menghasilkan callback hell

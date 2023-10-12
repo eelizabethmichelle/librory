@@ -3,156 +3,217 @@
 {% load static %}
 
 {% block content %}
-    <style>
 
-    .center-element {
-        text-align: center;
-    }
-
-    h1 {
-        font-size: calc(1.375rem + 1.5vw);
-        color:white;
-    }
-
-    h6 {
-        font-size: 1rem;
-        color: white;
-    }
-    
-    p {
-        font-size: 13px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 1rem;
-    }
-    
-    table, th, td {
-        border: 1px solid var(--bs-border-color);
-        text-align: center;
-    }
-
-    th, td {
-        padding: 0.5rem; 
-    }
-
-    button {
-        border-radius: 15px;
-        border: none;
-        padding: 5px 10px;
-        cursor: pointer;
-    }
-
-    body {
-        font: 20px Montserrat, sans-serif;
-        line-height: 1.8;
-        color: #f5f6f7;
-    }
-
-    .margin {
-        margin-bottom: 45px;
-        margin-left: 45px;
-        margin-right: 45px;
-    }
-
-    .bg-1 { 
-        background-color: #1abc9c; /* Green */
-        color: #ffffff;
-    }
-
-    .bg-2 { 
-        background-color: #474e5d; /* Dark Blue */
-        color: #ffffff;
-    }
-
-    .bg-3 { 
-        background-color: #ffffff; /* White */
-        color: #555555;
-    }
-
-    .bg-4 { 
-        background-color: #2f2f2f; /* Black Gray */
-        color: #fff;
-    }
-
-    .container-fluid {
-        padding-top: 70px;
-        padding-bottom: 70px;
-    }
-
-    .navbar {
-        padding-top: 15px;
-        padding-bottom: 15px;
-        border: 0;
-        border-radius: 0;
-        margin-bottom: 0;
-        font-size: 12px;
-        letter-spacing: 5px;
-    }
-    
-    .navbar-nav  li a:hover {
-        color: #1abc9c !important;
-        font-size: small;
-    }
-
-    </style>
     <nav class="navbar navbar-default">
         <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">{{ name }}</a>
+          <div class="navbar-header" style="font-size: medium; color: black;">
+            {{ name }}
           </div>
             <div class="nav navbar-nav navbar-right">
                 <a href="{% url 'main:logout' %}">
-                    <button class="btn btn-outline-success" type="button">Logout</button>
+                    <button class="btn btn-style-1" type="button">Logout</button>
                 </a>
             </div>
         </div>
     </nav>
 
     <body>
-        <div class="container-fluid bg-1 text-center">
+
+        <div class="container-fluid bg-1 text-center" style="padding-top: 100px;">
             <h1>Librory</h1>
-            <p>Unveiling the World's Tales at Your Fingertips</p>
+            <p><em>Unveiling the World's Tales at Your Fingertips</em></p>
         </div>
 
-        <div class="container-fluid bg-2 text-center">
-            <h4 class="margin">What Is Librory</h4>
-            <p class="margin">Introducing Librory, your gateway to a world of books. Explore our vast collection, check the availability of each title, and stay informed about the number of copies in circulation. With real-time information at your fingertips, you'll have all you need to embark on your reading journey. Discover, enjoy, and immerse yourself in the magic of literature through our app.</p>
-        </div>
-
-        <div class="container-fluid bg-3 text-center">    
-            <h3 class="margin">Find Your Favorite Book</h3><br>
-            <div class="center-element">
-                <div class="row">
-                    {% for item in items %}
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="card mx-auto p-3" style="width: 18rem;">
-                            <div class="card-body">
-                                <h4 class="card-title">{{ item.name }}</h4>
-                                <p class="card-text">{{ item.category }}</p>
-                                <p class="card-text">Amount: {{ item.amount }}</p>
-                                <p class="card-text">Rented: {{ item.rented }}</p>
-                                <p class="card-text">{{ item.description }}</p>
-                                <a href="{% url 'main:edit_item' item.pk %}" class="btn btn-primary">Edit</a>
-                                <a href="{% url 'main:delete_item' item.pk %}" class="btn btn-primary">Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-
-                <p></p>
-                <a href="{% url 'main:create_item' %}">
-                    <button class="btn btn-outline-success" type="button">Add Item</button>
-                </a>
+        <div class="container-fluid gradient-div-2 text-center">
+            <div class="border-0 shadow rounded-3" style="padding: 1%; background-color: rgba(255, 255, 255, 0.05)">
+                <h4 class="margin">What Is Librory</h4>
+                <p class="margin">
+                    Introducing Librory, the ultimate companion for book enthusiasts who want to effortlessly organize their personal libraries. With Librory, you can take control of your book collection, turning it into a well-structured, easily navigable haven for your literary treasures.
+                    Librory simplifies the process of managing your personal library, making it easier than ever to see, organize, and enjoy your beloved books. Take the first step towards a perfectly curated literary haven with Librory - 
+                    <em>where your personal library becomes a digital delight.</em>
+                </p>
             </div>
         </div>
 
+        <div class="container-fluid gradient-div-1 text-center">    
+            <h3 class="margin">Organize Your Favorite Books</h3>
+            <div class="center-element">                
+                <div id="item_card">        
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addItemModal">Add Book</button>
+            </div>
+            <p>
+        </div>
+        
         <footer class="container-fluid bg-4 text-center">
             <p>Last login: {{ last_login }}</p> 
         </footer>
 
     </body>
+    
+    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="color: black;">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" style="color: black;" id="addItemModalLabel">Add New Item</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">                            
+                        {% csrf_token %}
+                        <div class="mb-3" style="font-size: medium;">
+                            <label for="name" class="col-form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+
+                        <div class="mb-3" style="font-size: medium;">
+                            <label for="amount" class="col-form-label">Amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount"></input>
+                        </div>
+
+                        <div class="mb-3" style="font-size: medium;">
+                            <label for="rented" class="col-form-label">Rented</label>
+                            <input type="number" class="form-control" id="rented" name="rented"></input>
+                        </div>
+
+                        <div class="mb-3" style="font-size: medium;">
+                            <label for="category" class="col-form-label">Category</label>
+                            <input type="text" class="form-control" id="category" name="category"></input>
+                        </div>
+
+                        <div class="mb-3" style="font-size: medium;">
+                            <label for="description" class="col-form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer" style="justify-content: center;">
+                    <button type="button" class="btn btn-outline-success" id="button_add" data-bs-dismiss="modal">Add Item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function getItems() {
+            return fetch("{% url 'main:get_item_json' %}").then((res) => res.json())
+        }
+
+        async function refreshItems() {
+            let cardHtml = ''
+            document.getElementById("item_card").innerHTML = cardHtml
+            const items = await getItems();
+
+            items.forEach((item) => {
+                cardHtml += `
+                <div class="card-item shadow">
+                    <div class="card mx-auto p-3" style="width: 18rem;">
+                        <div class="card-body">
+                            <h4 class="card-title">${item.fields.name}</h4>
+                            <p class="card-text">${item.fields.category}</p>
+                            <p class="card-text">Amount</p>
+                            <p class="card-text">
+                                <div class="btn-container">
+                                    <button class="btn decrement-btn" onclick="decrementAmount(${item.pk})">-</button>
+                                    <span id="amount-${item.pk}">${item.fields.amount}</span>
+                                    <button class="btn increment-btn" onclick="incrementAmount(${item.pk})">+</button>
+                                </div>
+                            </p>
+                            <p class="card-text">Rented</p>
+                            <p class="card-text">
+                                <div class="btn-container">
+                                    <button class="btn decrement-btn" onclick="decrementRented(${item.pk})">-</button>
+                                    <span id="rented-${item.pk}">${item.fields.rented}</span>
+                                    <button class="btn increment-btn" onclick="incrementRented(${item.pk})">+</button>
+                                </div>
+                            </p>
+                            <p class="card-text">${item.fields.description}</p>
+                            <a style="justify-content: baseline;" href='edit-item/${item.pk}' class="btn btn-outline-warning" onclick="editItem(${item.pk})">Edit</a>
+                            <button style="justify-content: baseline;" class="btn btn-outline-danger" onclick="deleteItem(${item.pk})">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+
+            document.getElementById("item_card").innerHTML = `<div class="card-container">${cardHtml}</div>`;
+        }
+
+        function addItem() {
+            fetch("{% url 'main:create_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshItems)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        function editItem(itemId) {
+            fetch(`{% url 'main:edit_item' 0 %}`.replace("0", itemId), {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshItems)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        function deleteItem(itemId) {
+            fetch(`{% url 'main:delete_item' 0 %}`.replace("0", itemId), {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshItems)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        function incrementAmount(itemId) {
+            fetch(`{% url 'main:inc_amount' 0 %}`.replace("0", itemId), {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshItems)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        function decrementAmount(itemId) {
+            fetch(`{% url 'main:dec_amount' 0 %}`.replace("0", itemId), {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshItems)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        function incrementRented(itemId) {
+            fetch(`{% url 'main:inc_rented' 0 %}`.replace("0", itemId), {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshItems)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        function decrementRented(itemId) {
+            fetch(`{% url 'main:dec_rented' 0 %}`.replace("0", itemId), {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshItems)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        document.getElementById("button_add").onclick = addItem
+        refreshItems()
+    </script>
 {% endblock content %}
