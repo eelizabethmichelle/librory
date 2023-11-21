@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from main.views import show_main, create_item, show_xml, show_json, show_xml_by_id, show_json_by_id
+from main.views import create_item_flutter, show_main, create_item, show_xml, show_json, show_xml_by_id, show_json_by_id
 from main.views import register, login_user, logout_user
 from main.views import edit_item, delete_item
 from main.views import get_item_json, create_ajax
@@ -27,4 +27,5 @@ urlpatterns = [
     path('dec-amount/<int:id>/', decrement_amount, name='dec_amount'),
     path('inc-rented/<int:id>/', increment_rented, name='inc_rented'),
     path('dec-rented/<int:id>/', decrement_rented, name='dec_rented'),
+    path('create-flutter/', create_item_flutter, name='create_product_flutter'),
 ]
