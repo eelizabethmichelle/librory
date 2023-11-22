@@ -112,7 +112,6 @@ def get_item_json(request):
     items = Item.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize('json', items))
 
-@csrf_exempt
 def create_ajax(request):
     if request.method == 'POST':
         name = request.POST.get("name")
