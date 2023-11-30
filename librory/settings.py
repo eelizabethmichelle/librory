@@ -133,7 +133,8 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
-CSRF_TRUSTED_ORIGINS = ["https://michelle-elizabeth-tugas.pbp.cs.ui.ac.id"]
+CSRF_TRUSTED_ORIGINS = ["https://michelle-elizabeth-tugas.pbp.cs.ui.ac.id",
+                        "https://*.127.0.0.1"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

@@ -169,6 +169,7 @@ def decrement_rented(request, id):
 
     return HttpResponseNotFound()
 
+@csrf_exempt
 def create_item_flutter(request):
     if request.method == 'POST':
         
